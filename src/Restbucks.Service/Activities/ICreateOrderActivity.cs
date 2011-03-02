@@ -5,6 +5,6 @@ namespace Restbucks.Service.Activities
 {
     public interface ICreateOrderActivity
     {
-        OrderRepresentation Create(OrderRepresentation orderRepresentation, Uri requestUri);
+        OrderRepresentation Create(OrderRepresentation orderRepresentation, string requestUri);
     }
 }

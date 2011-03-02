@@ -4,6 +4,8 @@ namespace Restbucks.Service.Domain
 {
     public class Order
     {
+        public virtual int Id { get; protected set; }
+
         protected virtual List<Item> ItemsCollection { get; set; }
         public virtual IEnumerable<Item> Items
         {
@@ -20,7 +22,7 @@ namespace Restbucks.Service.Domain
         { 
         }
 
-        protected Order(Location location, IEnumerable<Item> items)
+        public Order(Location location, IEnumerable<Item> items)
         {
             Location = location;
             ItemsCollection = new List<Item>(items);

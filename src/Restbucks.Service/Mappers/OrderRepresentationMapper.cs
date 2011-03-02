@@ -6,16 +6,27 @@ namespace Restbucks.Service.Mappers
 {
     public class OrderRepresentationMapper
     {
+        private readonly ItemRepresentationMapper _itemMapper;
+
+        public OrderRepresentationMapper(ItemRepresentationMapper itemMapper)
+        {
+            _itemMapper = itemMapper;
+        }
+
         public OrderRepresentation GetRepresentation(Order order)
         {
-            var itemMapper = new ItemRepresentationMapper();
             return new OrderRepresentation
                        {
                            Cost = order.Total,
-                           Items = order.Items.Select(itemMapper.GetRepresentation).ToList(),
+                           Items = order.Items.Select(_itemMapper.GetRepresentation).ToList(),
                            Location = order.Location,
                            Status = order.Status,
                        };
+        }
+
+        public Order GetDomainObject(OrderRepresentation orderRepresentation)
+        {
+            return new Order(orderRepresentation.Location, orderRepresentation.Items.Select(_itemMapper.GetDomainObject));
         }
     }
 }

@@ -17,12 +17,7 @@ namespace Restbucks.Service.Mappers
 
         public Item GetDomainObject(ItemRepresentation itemRepresentation)
         {
-            return new Item
-                       {
-                           Drink = itemRepresentation.Drink,
-                           Milk = itemRepresentation.Milk,
-                           Size = itemRepresentation.Size
-                       };
+            return new Item(itemRepresentation.Drink, itemRepresentation.Size, itemRepresentation.Milk);
         }
     }
 }

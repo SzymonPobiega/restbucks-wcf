@@ -22,7 +22,8 @@ namespace Restbucks.Service.Resources
             RequestFormat = WebMessageFormat.Xml, ResponseFormat = WebMessageFormat.Xml)]
         public OrderRepresentation Create(OrderRepresentation orderRepresentation, HttpRequestMessage requestMessage, HttpResponseMessage responseMessage)
         {
-            var response = _createOrderActivity.Create(orderRepresentation, requestMessage.RequestUri);
+            var baseUri = requestMessage.RequestUri.GetLeftPart(UriPartial.Authority);
+            var response = _createOrderActivity.Create(orderRepresentation, baseUri);
             responseMessage.StatusCode = HttpStatusCode.Created;
             responseMessage.Headers.Location = new Uri(orderRepresentation.UpdateLink);
             return response;
