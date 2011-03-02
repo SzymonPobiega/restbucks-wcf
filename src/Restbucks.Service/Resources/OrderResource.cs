@@ -18,14 +18,17 @@ namespace Restbucks.Service.Resources
             _createOrderActivity = createOrderActivity;
         }
 
-        [WebInvoke(Method = "POST", UriTemplate = "/",
-            RequestFormat = WebMessageFormat.Xml, ResponseFormat = WebMessageFormat.Xml)]
+        [WebInvoke(
+            Method = "POST", 
+            UriTemplate = "/",
+            RequestFormat = WebMessageFormat.Xml, 
+            ResponseFormat = WebMessageFormat.Xml)]
         public OrderRepresentation Create(OrderRepresentation orderRepresentation, HttpRequestMessage requestMessage, HttpResponseMessage responseMessage)
         {
             var baseUri = requestMessage.RequestUri.GetLeftPart(UriPartial.Authority);
             var response = _createOrderActivity.Create(orderRepresentation, baseUri);
             responseMessage.StatusCode = HttpStatusCode.Created;
-            responseMessage.Headers.Location = new Uri(orderRepresentation.UpdateLink);
+            responseMessage.Headers.Location = new Uri(response.UpdateLink);
             return response;
         }
     }

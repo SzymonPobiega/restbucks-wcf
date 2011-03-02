@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Restbucks.Service", "Restbucks.Service\Restbucks.Service.csproj", "{B8B17CB5-7CA4-4324-A899-2F0074FB44A3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Restbucks.Service.Tests", "Restbucks.Service.Tests\Restbucks.Service.Tests.csproj", "{34EB5C7F-7F94-49C1-9DA6-E0EF13A3471F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,6 +15,10 @@ Global
 		{B8B17CB5-7CA4-4324-A899-2F0074FB44A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B8B17CB5-7CA4-4324-A899-2F0074FB44A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B8B17CB5-7CA4-4324-A899-2F0074FB44A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{34EB5C7F-7F94-49C1-9DA6-E0EF13A3471F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34EB5C7F-7F94-49C1-9DA6-E0EF13A3471F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34EB5C7F-7F94-49C1-9DA6-E0EF13A3471F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34EB5C7F-7F94-49C1-9DA6-E0EF13A3471F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

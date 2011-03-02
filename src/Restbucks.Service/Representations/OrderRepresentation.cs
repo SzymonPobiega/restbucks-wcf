@@ -46,18 +46,5 @@ namespace Restbucks.Service.Representations
             get { return GetLinkByRel(SelfRelValue).UnlessNull(x => x.Uri); }
             set { SetLink(SelfRelValue, value); }
         }
-
-        public OrderRepresentation()
-        {
-            
-        }
-
-        //public OrderRepresentation(string orderUri, string paymentUri)
-        //{        
-        //    SetLink(RestbucksRelation.Update, orderUri);
-        //    SetLink(RestbucksRelation.Cancel, orderUri);
-        //    SetLink(RestbucksRelation.Payment, paymentUri);
-        //    SetLink(SelfRelValue, orderUri);
-        //}
     }
 }
