@@ -26,35 +26,38 @@ namespace Restbucks.Service.Representations
             set { SetLink(RestbucksRelation.Update, value); }
         }
 
-        //[XmlIgnore]
-        //public Link CancelLink
-        //{
-        //    get { return GetLinkByRel(RestbucksRelation.Cancel); }
-        //}
+        [XmlIgnore]
+        public string CancelLink
+        {
+            get { return GetLinkByRel(RestbucksRelation.Cancel).UnlessNull(x => x.Uri); }
+            set { SetLink(RestbucksRelation.Cancel, value); }
+        }
 
-        //[XmlIgnore]
-        //public Link PaymentLink
-        //{
-        //    get { return GetLinkByRel(RestbucksRelation.Payment); }
-        //}
+        [XmlIgnore]
+        public string PaymentLink
+        {
+            get { return GetLinkByRel(RestbucksRelation.Payment).UnlessNull(x => x.Uri); }
+            set { SetLink(RestbucksRelation.Payment, value); }
+        }
 
-        //[XmlIgnore]
-        //public Link SelfLink
-        //{
-        //    get { return GetLinkByRel(SelfRelValue); }
-        //}
+        [XmlIgnore]
+        public string SelfLink
+        {
+            get { return GetLinkByRel(SelfRelValue).UnlessNull(x => x.Uri); }
+            set { SetLink(SelfRelValue, value); }
+        }
 
         public OrderRepresentation()
         {
             
         }
 
-        public OrderRepresentation(string orderUri, string paymentUri)
-        {        
-            SetLink(RestbucksRelation.Update, orderUri);
-            SetLink(RestbucksRelation.Cancel, orderUri);
-            SetLink(RestbucksRelation.Payment, paymentUri);
-            SetLink(SelfRelValue, orderUri);
-        }
+        //public OrderRepresentation(string orderUri, string paymentUri)
+        //{        
+        //    SetLink(RestbucksRelation.Update, orderUri);
+        //    SetLink(RestbucksRelation.Cancel, orderUri);
+        //    SetLink(RestbucksRelation.Payment, paymentUri);
+        //    SetLink(SelfRelValue, orderUri);
+        //}
     }
 }

@@ -78,6 +78,8 @@
     <Compile Include="Domain\Location.cs" />
     <Compile Include="Domain\Order.cs" />
     <Compile Include="Extensions.cs" />
+    <Compile Include="Mappers\ItemRepresentationMapper.cs" />
+    <Compile Include="Mappers\OrderRepresentationMapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Domain\Drink.cs" />
     <Compile Include="Domain\Item.cs" />
