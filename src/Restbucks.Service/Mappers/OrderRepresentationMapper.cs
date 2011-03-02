@@ -17,7 +17,7 @@ namespace Restbucks.Service.Mappers
         {
             return new OrderRepresentation
                        {
-                           Cost = order.Total,
+                           Cost = order.CalculateTotal(),
                            Items = order.Items.Select(_itemMapper.GetRepresentation).ToList(),
                            Location = order.Location,
                            Status = order.Status,

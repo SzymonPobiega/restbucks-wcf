@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Restbucks.Service.Domain
 {
@@ -12,9 +13,7 @@ namespace Restbucks.Service.Domain
             get { return ItemsCollection; }
         }
 
-        public virtual Location Location { get; protected set; }
-
-        public virtual decimal Total { get; protected set; }
+        public virtual Location Location { get; protected set; }        
 
         public virtual OrderStatus Status { get; protected set; }
 
@@ -26,6 +25,11 @@ namespace Restbucks.Service.Domain
         {
             Location = location;
             ItemsCollection = new List<Item>(items);
+        }
+
+        public decimal CalculateTotal()
+        {
+            return ItemsCollection.Sum(x => x.CalculateCost());
         }
     }
 }
