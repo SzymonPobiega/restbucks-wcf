@@ -4,5 +4,6 @@ namespace Restbucks.Service.Domain
     {
         Order FindById(int orderId);
         int Store(Order order);
+        void Remove(int orderId);
     }
 }

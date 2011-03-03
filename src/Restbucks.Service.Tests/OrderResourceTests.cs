@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using NUnit.Framework;
 using Restbucks.Service.Activities;
@@ -14,13 +15,15 @@ namespace Restbucks.Service.Tests
     [TestFixture]
     public class OrderResourceTests
     {
+        private OrderResource _sut;
+        private InMemoryOrderRepository _repository;
+
         [Test]
         public void Create_should_return_new_order_representation()
         {
-            var sut = CreateResource();
             var requestBody = CreateOrder();
 
-            var result = sut.Create(requestBody,
+            var result = _sut.Create(requestBody,
                        new HttpRequestMessage(HttpMethod.Post, "http://restbucks.net/order"),
                        new HttpResponseMessage());
 
@@ -35,29 +38,71 @@ namespace Restbucks.Service.Tests
         [Test]
         public void Get_should_return_the_same_representation_as_create_is_order_status_is_unpaid()
         {
-            var sut = CreateResource();
             var requestBody = CreateOrder();
 
-            var createResult = sut.Create(requestBody,
+            var createResult = _sut.Create(requestBody,
                        new HttpRequestMessage(HttpMethod.Post, "http://restbucks.net/order"),
                        new HttpResponseMessage());
 
             var parts = createResult.SelfLink.Split('/');
 
-            var getResult = sut.Get(parts.Last(),
+            var getResult = _sut.Get(parts.Last(),
                                     new HttpRequestMessage(HttpMethod.Get, createResult.SelfLink),
                                     new HttpResponseMessage());
 
             Assert.AreEqual(getResult.Cost, createResult.Cost);
         }
 
-        private static OrderResource CreateResource()
+        [Test]
+        public void Deleting_paid_order_should_return_405()
         {
-            var repository = new InMemoryOrderRepository();
+            var order = new Order(Location.InStore, new[] {new Item(Drink.Espresso, Size.Large, Milk.Semi)});
+            order.Pay();
+            var id = _repository.Store(order);
+            var responseMessage = new HttpResponseMessage();
+
+            _sut.Delete(id.ToString(),
+                       new HttpRequestMessage(HttpMethod.Post, "http://restbucks.net/order"),
+                       responseMessage);
+
+            Assert.AreEqual(HttpStatusCode.MethodNotAllowed, responseMessage.StatusCode);
+        }
+
+        [Test]
+        public void Deleting_not_existent_order_should_return_404()
+        {
+            var responseMessage = new HttpResponseMessage();
+
+            _sut.Delete("13",
+                       new HttpRequestMessage(HttpMethod.Post, "http://restbucks.net/order"),
+                       responseMessage);
+
+            Assert.AreEqual(HttpStatusCode.NotFound, responseMessage.StatusCode);
+        }
+
+        [Test]
+        public void Deleting_unpaid_order_should_remove_it_from_repository()
+        {
+            var order = new Order(Location.InStore, new[] { new Item(Drink.Espresso, Size.Large, Milk.Semi) });
+            var id = _repository.Store(order);
+            var responseMessage = new HttpResponseMessage();
+
+            _sut.Delete(id.ToString(),
+                       new HttpRequestMessage(HttpMethod.Post, "http://restbucks.net/order"),
+                       responseMessage);
+
+            Assert.IsNull(_repository.FindById(id));
+        }
+
+        [SetUp]
+        public void Initialize()
+        {
+            _repository = new InMemoryOrderRepository();
             var mapper = new OrderRepresentationMapper(new ItemRepresentationMapper());
-            return new OrderResource(
-                new CreateOrderActivity(repository, mapper), 
-                new ReadOrderActivity(repository, mapper));
+            _sut = new OrderResource(
+                new CreateOrderActivity(_repository, mapper),
+                new ReadOrderActivity(_repository, mapper),
+                new RemoveOrderActivity(_repository, mapper));
         }
 
         private static OrderRepresentation CreateOrder()

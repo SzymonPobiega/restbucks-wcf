@@ -20,8 +20,12 @@ namespace Restbucks.Service.Activities
         public OrderRepresentation Read(int orderId, string baseUri)
         {
             var order = _repository.FindById(orderId);
-            var representation = _orderRepresentationMapper.GetRepresentation(order);
+            if (order == null)
+            {
+                throw new NoSuchOrderException(orderId);
+            }
 
+            var representation = _orderRepresentationMapper.GetRepresentation(order);
             var orderUri = RestbucksResources.GetResourceUri<OrderResource>(baseUri, orderId.ToString());
 
             if (order.Status == OrderStatus.Unpaid)
@@ -32,7 +36,7 @@ namespace Restbucks.Service.Activities
                 representation.UpdateLink = orderUri;
                 representation.SelfLink = orderUri;
             }
-            else if (order.Status == OrderStatus.Praparing)
+            else if (order.Status == OrderStatus.Preparing)
             {
                 representation.SelfLink = orderUri;
             }

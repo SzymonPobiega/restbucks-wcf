@@ -7,7 +7,7 @@ namespace Restbucks.Service.Domain
         [XmlEnum("unpaid")]
         Unpaid,
         [XmlEnum("preparing")]
-        Praparing,
+        Preparing,
         [XmlEnum("ready")]
         Ready,
         [XmlEnum("taken")]

@@ -21,6 +21,11 @@ namespace Restbucks.Service.Domain
         { 
         }
 
+        public void Pay()
+        {
+            Status = OrderStatus.Preparing;
+        }
+
         public Order(Location location, IEnumerable<Item> items)
         {
             Location = location;
