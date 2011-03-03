@@ -41,6 +41,13 @@ namespace Restbucks.Service.Representations
         }
 
         [XmlIgnore]
+        public string ReceiptLink
+        {
+            get { return GetLinkByRel(RestbucksRelation.Receipt).UnlessNull(x => x.Uri); }
+            set { SetLink(RestbucksRelation.Receipt, value); }
+        }
+
+        [XmlIgnore]
         public string SelfLink
         {
             get { return GetLinkByRel(SelfRelValue).UnlessNull(x => x.Uri); }

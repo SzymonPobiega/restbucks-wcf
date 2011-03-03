@@ -83,6 +83,9 @@
   <ItemGroup>
     <Compile Include="Activities\CreateOrderActivity.cs" />
     <Compile Include="Activities\ICreateOrderActivity.cs" />
+    <Compile Include="Activities\IReadReceiptActivity.cs" />
+    <Compile Include="Activities\ReadReceiptActivity.cs" />
+    <Compile Include="Mappers\ReceiptRepresentationMapper.cs" />
     <Compile Include="Domain\InvalidPaymentException.cs" />
     <Compile Include="Activities\IPaymentActivity.cs" />
     <Compile Include="Activities\IReadOrderActivity.cs" />
@@ -95,6 +98,8 @@
     <Compile Include="Activities\UnexpectedOrderStateException.cs" />
     <Compile Include="Domain\PaymentInformation.cs" />
     <Compile Include="Representations\PaymentRepresentation.cs" />
+    <Compile Include="Representations\ReceiptRepresentation.cs" />
+    <Compile Include="Resources\ReceiptResource.cs" />
     <Compile Include="Resources\PaymentResource.cs" />
     <Compile Include="Domain\IOrderRepository.cs" />
     <Compile Include="Domain\Location.cs" />

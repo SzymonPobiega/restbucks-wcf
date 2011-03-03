@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -16,6 +17,7 @@ namespace Restbucks.Service.Domain
         public PaymentInformation PaymentInfo { get; private set; }
         public Location Location { get; private set; }
         public OrderStatus Status { get; private set; }
+        public DateTime PaymentDateUtc { get; private set; }
 
         public Order(Location location, IEnumerable<Item> items)
         {
@@ -30,6 +32,7 @@ namespace Restbucks.Service.Domain
                 throw new InvalidPaymentException();
             }
             Status = OrderStatus.Preparing;
+            PaymentDateUtc = DateTime.UtcNow;
             PaymentInfo = paymentInformation;
         }
 

@@ -42,7 +42,7 @@ namespace Restbucks.Service.Activities
             }
             else if (order.Status == OrderStatus.Ready)
             {
-                //receipt
+                representation.ReceiptLink = RestbucksResources.GetResourceUri<ReceiptResource>(baseUri,orderId.ToString());
             }
             return representation;
         }

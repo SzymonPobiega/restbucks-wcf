@@ -31,10 +31,10 @@ namespace Restbucks.Service.Activities
             
             var payment = _paymentMapper.GetDomainObject(paymentRepresentation);
             order.Pay(payment);
-            var result = _paymentMapper.GetRepresentation(order.PaymentInfo);
-            result.OrderLink = RestbucksResources.GetResourceUri<OrderResource>(baseUri, order.Id.ToString());
-            //Add receipt link
-            return result;
+            var representation = _paymentMapper.GetRepresentation(order.PaymentInfo);
+            representation.OrderLink = RestbucksResources.GetResourceUri<OrderResource>(baseUri, order.Id.ToString());
+            representation.ReceiptLink = RestbucksResources.GetResourceUri<ReceiptResource>(baseUri, orderId.ToString());
+            return representation;
         }
     }
 }

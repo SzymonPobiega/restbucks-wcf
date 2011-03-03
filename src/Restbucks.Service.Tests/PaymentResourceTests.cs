@@ -53,6 +53,37 @@ namespace Restbucks.Service.Tests
         }
 
         [Test]
+        public void Pay_should_return_400_if_payment_id_is_not_integer()
+        {
+            var order = CreateOrder();
+            var id = _repository.Store(order);
+            var representation = CreatePayment();
+
+            var responseMessage = new HttpResponseMessage();
+
+            _sut.Pay("aaa", representation,
+                     new HttpRequestMessage(HttpMethod.Put, "http://restbucks.net/payment/" + id),
+                     responseMessage);
+
+            Assert.AreEqual(HttpStatusCode.BadRequest, responseMessage.StatusCode);
+        }
+        [Test]
+        public void Pay_should_return_404_if_payment_id_is_invalid()
+        {
+            var order = CreateOrder();
+            var id = _repository.Store(order);
+            var representation = CreatePayment();
+
+            var responseMessage = new HttpResponseMessage();
+
+            _sut.Pay("13", representation,
+                     new HttpRequestMessage(HttpMethod.Put, "http://restbucks.net/payment/" + id),
+                     responseMessage);
+
+            Assert.AreEqual(HttpStatusCode.NotFound, responseMessage.StatusCode);
+        }
+
+        [Test]
         public void Pay_should_return_200_if_unpaid()
         {
             var order = CreateOrder();
@@ -67,7 +98,7 @@ namespace Restbucks.Service.Tests
 
             Assert.AreEqual(HttpStatusCode.Created, responseMessage.StatusCode);
             Assert.AreEqual("http://restbucks.net/order/1", responseBody.OrderLink);
-            //Assert.AreEqual("http://restbucks.net/order/1", responseBody.ReceiptLink);
+            Assert.AreEqual("http://restbucks.net/receipt/1", responseBody.ReceiptLink);
         }
 
         private static Order CreateOrder()
