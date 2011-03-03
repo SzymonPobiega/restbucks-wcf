@@ -76,6 +76,12 @@
     <Compile Include="..\Restbucks.Service\Representations\OrderRepresentation.cs">
       <Link>Representations\OrderRepresentation.cs</Link>
     </Compile>
+    <Compile Include="..\Restbucks.Service\Representations\PaymentRepresentation.cs">
+      <Link>Representations\PaymentRepresentation.cs</Link>
+    </Compile>
+    <Compile Include="..\Restbucks.Service\Representations\ReceiptRepresentation.cs">
+      <Link>Representations\ReceiptRepresentation.cs</Link>
+    </Compile>
     <Compile Include="..\Restbucks.Service\Representations\RepresentationBase.cs">
       <Link>Representations\RepresentationBase.cs</Link>
     </Compile>

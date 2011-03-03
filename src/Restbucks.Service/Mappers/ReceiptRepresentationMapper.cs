@@ -1,4 +1,5 @@
-﻿using Restbucks.Service.Domain;
+﻿using System.Xml;
+using Restbucks.Service.Domain;
 using Restbucks.Service.Representations;
 
 namespace Restbucks.Service.Mappers
@@ -10,7 +11,7 @@ namespace Restbucks.Service.Mappers
             return new ReceiptRepresentation
                        {
                            AmountPaid = order.PaymentInfo.Amount,
-                           PaymentDate = order.PaymentDateUtc.ToLongDateString()
+                           PaymentDate = XmlConvert.ToString(order.PaymentDateUtc, XmlDateTimeSerializationMode.Utc)
                        };
         }
     }

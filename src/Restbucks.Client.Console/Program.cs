@@ -19,6 +19,22 @@ namespace Restbucks.Client.Console
             System.Console.WriteLine("Press enter to check order state");
             order = client.GetOrder(order.SelfLink);
             System.Console.WriteLine("Order state: {0}", order.Status);
+            System.Console.WriteLine("Press enter to pay for the order");
+            System.Console.ReadLine();
+            var payment = new PaymentRepresentation
+                              {
+                                  Amount = 2.8m,
+                                  CardholderName = "Szymon",
+                                  CardNumber = "XXX",
+                                  ExpiryMonth = 12,
+                                  ExpiryYear = 12
+                              };
+            payment = client.PayForOrder(order.PaymentLink, payment);
+            System.Console.WriteLine("Press enter to get the receipt");
+            System.Console.ReadLine();
+            var receipt = client.GetReceipt(payment.ReceiptLink);
+            System.Console.WriteLine("You paid ${0} at {1} UTC", receipt.AmountPaid, receipt.PaymentDate);
+            System.Console.WriteLine("Press enter to exit");
             System.Console.ReadLine();
         }
 
