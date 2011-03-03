@@ -20,6 +20,7 @@ namespace Restbucks.Service
         static RestbucksResources()
         {
             Bind<OrderResource>("order");
+            Bind<PaymentResource>("payment");
         }
 
         public static void RegisterRoutes(HttpHostConfiguration configuration)
