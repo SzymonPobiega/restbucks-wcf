@@ -28,10 +28,7 @@ namespace Restbucks.Service.Activities
             {
                 throw new UnexpectedOrderStateException(orderId);
             }
-            if (order.CalculateTotal() != paymentRepresentation.Amount)
-            {
-                throw new InvalidPaymentException();
-            }
+            
             var payment = _paymentMapper.GetDomainObject(paymentRepresentation);
             order.Pay(payment);
             var result = _paymentMapper.GetRepresentation(order.PaymentInfo);

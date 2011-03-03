@@ -56,8 +56,8 @@ namespace Restbucks.Service.Tests
         [Test]
         public void Canceling_paid_order_should_return_405()
         {
-            var order = new Order(Location.InStore, new[] {new Item(Drink.Espresso, Size.Large, Milk.Semi)});
-            order.Pay(new PaymentInformation(2, "", "", 12, 12));
+            var order = new Order(Location.InStore, new[] {new Item(Drink.Espresso, Size.Medium, Milk.Semi)});
+            order.Pay(new PaymentInformation(1, "", "", 12, 12));
             var id = _repository.Store(order);
             var responseMessage = new HttpResponseMessage();
 

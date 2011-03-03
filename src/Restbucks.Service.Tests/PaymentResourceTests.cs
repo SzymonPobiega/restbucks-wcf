@@ -22,16 +22,9 @@ namespace Restbucks.Service.Tests
         public void Pay_should_return_403_if_already_paid()
         {
             var order = CreateOrder();
-            order.Pay(new PaymentInformation(2, "", "", 12, 12));
+            order.Pay(new PaymentInformation(1, "", "", 12, 12));
             var id = _repository.Store(order);
-            var representation = new PaymentRepresentation
-                                     {
-                                         Amount = 2,
-                                         CardholderName = "Szymon",
-                                         CardNumber = "XXX",
-                                         ExpiryMonth = 12,
-                                         ExpiryYear = 12
-                                     };
+            var representation = CreatePayment();
 
             var responseMessage = new HttpResponseMessage();
 
@@ -43,18 +36,28 @@ namespace Restbucks.Service.Tests
         }
 
         [Test]
+        public void Pay_should_return_400_if_amount_does_not_match()
+        {
+            var order = CreateOrder();
+            var id = _repository.Store(order);
+            var representation = CreatePayment();
+            representation.Amount = 2;
+
+            var responseMessage = new HttpResponseMessage();
+
+            _sut.Pay(id.ToString(), representation,
+                     new HttpRequestMessage(HttpMethod.Put, "http://restbucks.net/payment/" + id),
+                     responseMessage);
+
+            Assert.AreEqual(HttpStatusCode.BadRequest, responseMessage.StatusCode);
+        }
+
+        [Test]
         public void Pay_should_return_200_if_unpaid()
         {
             var order = CreateOrder();
             var id = _repository.Store(order);
-            var representation = new PaymentRepresentation
-            {
-                Amount = 1,
-                CardholderName = "Szymon",
-                CardNumber = "XXX",
-                ExpiryMonth = 12,
-                ExpiryYear = 12
-            };
+            var representation = CreatePayment();
 
             var responseMessage = new HttpResponseMessage();
 
@@ -70,6 +73,18 @@ namespace Restbucks.Service.Tests
         private static Order CreateOrder()
         {
             return new Order(Location.InStore, new[] { new Item(Drink.Espresso, Size.Medium, Milk.Semi) });
+        }
+
+        private static PaymentRepresentation CreatePayment()
+        {
+            return new PaymentRepresentation
+            {
+                Amount = 1,
+                CardholderName = "Szymon",
+                CardNumber = "XXX",
+                ExpiryMonth = 12,
+                ExpiryYear = 12
+            };
         }
 
         [SetUp]

@@ -25,6 +25,10 @@ namespace Restbucks.Service.Domain
 
         public void Pay(PaymentInformation paymentInformation)
         {
+            if (CalculateTotal() != paymentInformation.Amount)
+            {
+                throw new InvalidPaymentException();
+            }
             Status = OrderStatus.Preparing;
             PaymentInfo = paymentInformation;
         }

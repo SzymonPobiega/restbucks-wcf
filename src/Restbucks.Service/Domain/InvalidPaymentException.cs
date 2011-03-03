@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Restbucks.Service.Activities
+namespace Restbucks.Service.Domain
 {
     public class InvalidPaymentException : Exception
     {

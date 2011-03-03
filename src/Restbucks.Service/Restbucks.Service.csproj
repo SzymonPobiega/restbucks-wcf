@@ -83,7 +83,7 @@
   <ItemGroup>
     <Compile Include="Activities\CreateOrderActivity.cs" />
     <Compile Include="Activities\ICreateOrderActivity.cs" />
-    <Compile Include="Activities\InvalidPaymentException.cs" />
+    <Compile Include="Domain\InvalidPaymentException.cs" />
     <Compile Include="Activities\IPaymentActivity.cs" />
     <Compile Include="Activities\IReadOrderActivity.cs" />
     <Compile Include="Activities\IRemoveOrderActivity.cs" />

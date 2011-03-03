@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.ServiceModel;
 using System.ServiceModel.Web;
 using Restbucks.Service.Activities;
+using Restbucks.Service.Domain;
 using Restbucks.Service.Representations;
 
 namespace Restbucks.Service.Resources
