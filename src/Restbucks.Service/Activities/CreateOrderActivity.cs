@@ -2,6 +2,7 @@ using System;
 using Restbucks.Service.Domain;
 using Restbucks.Service.Mappers;
 using Restbucks.Service.Representations;
+using Restbucks.Service.Resources;
 
 namespace Restbucks.Service.Activities
 {
@@ -21,8 +22,8 @@ namespace Restbucks.Service.Activities
             var newOrder = _orderRepresentationMapper.GetDomainObject(orderRepresentation);
             var orderId = _repository.Store(newOrder);
 
-            var orderUri = baseUri + "/order/" + orderId;
-            var paymentUri = baseUri + "/payment/" + orderId;
+            var orderUri = RestbucksResources.GetResourceUri<OrderResource>(baseUri, orderId.ToString());
+            var paymentUri = RestbucksResources.GetResourceUri<PaymentResource>(baseUri, orderId.ToString());
 
             var result = _orderRepresentationMapper.GetRepresentation(newOrder);
             result.UpdateLink = orderUri;

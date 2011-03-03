@@ -30,6 +30,11 @@ namespace Restbucks.Service
             }
         }
 
+        public static string GetResourceUri<T>(string baseUri, string suffix)
+        {
+            return baseUri + "/" + GetResourceUri<T>() + "/" + suffix;
+        }
+
         public static string GetResourceUri<T>()
         {
             var binding = _resources.FirstOrDefault(x => x.ResourceType == typeof (T));

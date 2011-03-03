@@ -83,6 +83,7 @@
   <ItemGroup>
     <Compile Include="Activities\CreateOrderActivity.cs" />
     <Compile Include="Activities\ICreateOrderActivity.cs" />
+    <Compile Include="Resources\PaymentResource.cs" />
     <Compile Include="Domain\IOrderRepository.cs" />
     <Compile Include="Domain\Location.cs" />
     <Compile Include="Domain\Order.cs" />
