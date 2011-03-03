@@ -81,7 +81,9 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Activities\CompleteOrderActivity.cs" />
     <Compile Include="Activities\CreateOrderActivity.cs" />
+    <Compile Include="Activities\ICompleteOrderActivity.cs" />
     <Compile Include="Activities\ICreateOrderActivity.cs" />
     <Compile Include="Activities\IReadReceiptActivity.cs" />
     <Compile Include="Activities\ReadReceiptActivity.cs" />

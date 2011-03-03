@@ -45,7 +45,9 @@ namespace Restbucks.Service.Tests
         {
             _repository = new InMemoryOrderRepository();
             var mapper = new ReceiptRepresentationMapper();
-            _sut = new ReceiptResource(new ReadReceiptActivity(_repository, mapper));
+            var orderMapper = new OrderRepresentationMapper(new ItemRepresentationMapper());
+            _sut = new ReceiptResource(new ReadReceiptActivity(_repository, mapper),
+                new CompleteOrderActivity(_repository, orderMapper));
         }
     }
 }

@@ -13,10 +13,12 @@ namespace Restbucks.Service.Resources
     public class ReceiptResource
     {
         private readonly IReadReceiptActivity _readReceiptActivity;
+        private readonly ICompleteOrderActivity _completeOrderActivity;
 
-        public ReceiptResource(IReadReceiptActivity readReceiptActivity)
+        public ReceiptResource(IReadReceiptActivity readReceiptActivity, ICompleteOrderActivity completeOrderActivity)
         {
             _readReceiptActivity = readReceiptActivity;
+            _completeOrderActivity = completeOrderActivity;
         }
 
         [WebGet(
@@ -37,6 +39,36 @@ namespace Restbucks.Service.Resources
                 catch (NoSuchOrderException)
                 {
                     responseMessage.StatusCode = HttpStatusCode.NotFound;
+                    return null;
+                }
+            }
+            responseMessage.StatusCode = HttpStatusCode.BadRequest;
+            return null;
+        }
+
+        [WebInvoke(
+            Method = "DELETE",
+            UriTemplate = "/{orderId}",
+            RequestFormat = WebMessageFormat.Xml,
+            ResponseFormat = WebMessageFormat.Xml)]
+        public OrderRepresentation Complete(string orderId, HttpRequestMessage requestMessage, HttpResponseMessage responseMessage)
+        {
+            int id;
+            if (int.TryParse(orderId, out id))
+            {
+                try
+                {
+                    var response = _completeOrderActivity.Complete(id);
+                    return response;
+                }
+                catch (NoSuchOrderException)
+                {
+                    responseMessage.StatusCode = HttpStatusCode.NotFound;
+                    return null;
+                }
+                catch (UnexpectedOrderStateException)
+                {
+                    responseMessage.StatusCode = HttpStatusCode.BadRequest;
                     return null;
                 }
             }

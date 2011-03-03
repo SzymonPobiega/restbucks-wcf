@@ -34,6 +34,9 @@ namespace Restbucks.Client.Console
             System.Console.ReadLine();
             var receipt = client.GetReceipt(payment.ReceiptLink);
             System.Console.WriteLine("You paid ${0} at {1} UTC", receipt.AmountPaid, receipt.PaymentDate);
+            System.Console.WriteLine("Press enter to complete order");
+            System.Console.ReadLine();
+            client.TakeCoffee(receipt.CompleteLink);
             System.Console.WriteLine("Press enter to exit");
             System.Console.ReadLine();
         }

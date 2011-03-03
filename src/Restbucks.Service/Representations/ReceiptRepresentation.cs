@@ -18,5 +18,12 @@ namespace Restbucks.Service.Representations
             get { return GetLinkByRel(RestbucksRelation.Order).UnlessNull(x => x.Uri); }
             set { SetLink(RestbucksRelation.Order, value); }
         }
+
+        [XmlIgnore]
+        public string CompleteLink
+        {
+            get { return GetLinkByRel(SelfRelValue).UnlessNull(x => x.Uri); }
+            set { SetLink(SelfRelValue, value); }
+        }
     }
 }

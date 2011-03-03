@@ -54,5 +54,11 @@ namespace Restbucks.Client.Console
             var responseContent = responseMessage.Content.ReadAsXmlSerializable<ReceiptRepresentation>(serializer);
             return responseContent;
         }
+
+        public void TakeCoffee(string receiptUri)
+        {
+            var httpClient = new HttpClient();
+            httpClient.Delete(receiptUri);
+        }
     }
 }

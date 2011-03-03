@@ -26,6 +26,7 @@ namespace Restbucks.Service.Activities
             }
             var representation = _receiptMapper.GetRepresentation(order);
             representation.OrderLink = RestbucksResources.GetResourceUri<OrderResource>(baseUri, orderId.ToString());
+            representation.CompleteLink = RestbucksResources.GetResourceUri<ReceiptResource>(baseUri, orderId.ToString());
             return representation;
         }
     }
