@@ -54,14 +54,14 @@ namespace Restbucks.Service.Tests
         }
 
         [Test]
-        public void Deleting_paid_order_should_return_405()
+        public void Canceling_paid_order_should_return_405()
         {
             var order = new Order(Location.InStore, new[] {new Item(Drink.Espresso, Size.Large, Milk.Semi)});
-            order.Pay();
+            order.Pay(new PaymentInformation(2, "", "", 12, 12));
             var id = _repository.Store(order);
             var responseMessage = new HttpResponseMessage();
 
-            _sut.Delete(id.ToString(),
+            _sut.Cancel(id.ToString(),
                        new HttpRequestMessage(HttpMethod.Post, "http://restbucks.net/order"),
                        responseMessage);
 
@@ -69,11 +69,11 @@ namespace Restbucks.Service.Tests
         }
 
         [Test]
-        public void Deleting_not_existent_order_should_return_404()
+        public void Canceling_not_existent_order_should_return_404()
         {
             var responseMessage = new HttpResponseMessage();
 
-            _sut.Delete("13",
+            _sut.Cancel("13",
                        new HttpRequestMessage(HttpMethod.Post, "http://restbucks.net/order"),
                        responseMessage);
 
@@ -81,13 +81,13 @@ namespace Restbucks.Service.Tests
         }
 
         [Test]
-        public void Deleting_unpaid_order_should_remove_it_from_repository()
+        public void Canceling_unpaid_order_should_remove_it_from_repository()
         {
             var order = new Order(Location.InStore, new[] { new Item(Drink.Espresso, Size.Large, Milk.Semi) });
             var id = _repository.Store(order);
             var responseMessage = new HttpResponseMessage();
 
-            _sut.Delete(id.ToString(),
+            _sut.Cancel(id.ToString(),
                        new HttpRequestMessage(HttpMethod.Post, "http://restbucks.net/order"),
                        responseMessage);
 

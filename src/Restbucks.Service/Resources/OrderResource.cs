@@ -68,7 +68,7 @@ namespace Restbucks.Service.Resources
             UriTemplate = "/{orderId}",
             RequestFormat = WebMessageFormat.Xml,
             ResponseFormat = WebMessageFormat.Xml)]
-        public OrderRepresentation Delete(string orderId, HttpRequestMessage requestMessage, HttpResponseMessage responseMessage)
+        public OrderRepresentation Cancel(string orderId, HttpRequestMessage requestMessage, HttpResponseMessage responseMessage)
         {
             int id;
             if (int.TryParse(orderId, out id))

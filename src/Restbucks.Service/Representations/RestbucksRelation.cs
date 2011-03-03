@@ -5,5 +5,7 @@
         Cancel,
         Payment,
         Update,
+        Order,
+        Receipt
     }
 }
