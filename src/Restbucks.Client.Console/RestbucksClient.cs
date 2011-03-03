@@ -25,5 +25,14 @@ namespace Restbucks.Client.Console
             var responseContent = responseMessage.Content.ReadAsXmlSerializable<OrderRepresentation>(serializer);
             return responseContent;
         }
+
+        public OrderRepresentation GetOrder(string orderUri)
+        {
+            var httpClient = new HttpClient();
+            var serializer = new XmlSerializer(typeof(OrderRepresentation));
+            var responseMessage = httpClient.Get(orderUri);
+            var responseContent = responseMessage.Content.ReadAsXmlSerializable<OrderRepresentation>(serializer);
+            return responseContent;
+        }
     }
 }

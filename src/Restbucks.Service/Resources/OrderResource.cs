@@ -12,10 +12,12 @@ namespace Restbucks.Service.Resources
     public class OrderResource
     {
         private readonly ICreateOrderActivity _createOrderActivity;
+        private readonly IReadOrderActivity _readOrderActivity;
 
-        public OrderResource(ICreateOrderActivity createOrderActivity)
+        public OrderResource(ICreateOrderActivity createOrderActivity, IReadOrderActivity readOrderActivity)
         {
             _createOrderActivity = createOrderActivity;
+            _readOrderActivity = readOrderActivity;
         }
 
         [WebInvoke(
@@ -29,6 +31,19 @@ namespace Restbucks.Service.Resources
             var response = _createOrderActivity.Create(orderRepresentation, baseUri);
             responseMessage.StatusCode = HttpStatusCode.Created;
             responseMessage.Headers.Location = new Uri(response.UpdateLink);
+            return response;
+        }
+
+        [WebGet(
+            UriTemplate = "/{orderId}",
+            RequestFormat = WebMessageFormat.Xml,
+            ResponseFormat = WebMessageFormat.Xml)]
+        public OrderRepresentation Get(string orderId, HttpRequestMessage requestMessage, HttpResponseMessage responseMessage)
+        {
+            var baseUri = requestMessage.RequestUri.GetLeftPart(UriPartial.Authority);
+            var id = int.Parse(orderId);
+            var response = _readOrderActivity.Read(id, baseUri);
+            responseMessage.StatusCode = HttpStatusCode.OK;
             return response;
         }
     }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using NUnit.Framework;
 using Restbucks.Service.Activities;
@@ -31,9 +32,32 @@ namespace Restbucks.Service.Tests
             Assert.AreEqual("http://restbucks.net/payment/1", result.PaymentLink);
         }
 
+        [Test]
+        public void Get_should_return_the_same_representation_as_create_is_order_status_is_unpaid()
+        {
+            var sut = CreateResource();
+            var requestBody = CreateOrder();
+
+            var createResult = sut.Create(requestBody,
+                       new HttpRequestMessage(HttpMethod.Post, "http://restbucks.net/order"),
+                       new HttpResponseMessage());
+
+            var parts = createResult.SelfLink.Split('/');
+
+            var getResult = sut.Get(parts.Last(),
+                                    new HttpRequestMessage(HttpMethod.Get, createResult.SelfLink),
+                                    new HttpResponseMessage());
+
+            Assert.AreEqual(getResult.Cost, createResult.Cost);
+        }
+
         private static OrderResource CreateResource()
         {
-            return new OrderResource(new CreateOrderActivity(new InMemoryOrderRepository(), new OrderRepresentationMapper(new ItemRepresentationMapper())));
+            var repository = new InMemoryOrderRepository();
+            var mapper = new OrderRepresentationMapper(new ItemRepresentationMapper());
+            return new OrderResource(
+                new CreateOrderActivity(repository, mapper), 
+                new ReadOrderActivity(repository, mapper));
         }
 
         private static OrderRepresentation CreateOrder()

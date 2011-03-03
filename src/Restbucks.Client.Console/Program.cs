@@ -16,7 +16,9 @@ namespace Restbucks.Client.Console
             System.Console.ReadLine();
             var order = client.CreateOrder(CreateOrder());
             System.Console.WriteLine("Order total: {0}", order.Cost);
-            System.Console.WriteLine("Press enter to exit");
+            System.Console.WriteLine("Press enter to check order state");
+            order = client.GetOrder(order.SelfLink);
+            System.Console.WriteLine("Order state: {0}", order.Status);
             System.Console.ReadLine();
         }
 
