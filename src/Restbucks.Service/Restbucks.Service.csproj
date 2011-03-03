@@ -94,7 +94,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Infrastructure\InMemoryOrderRepository.cs" />
-    <Compile Include="MainModule.asax.cs" />
+    <Compile Include="MainModule.cs" />
     <Compile Include="Mappers\ItemRepresentationMapper.cs" />
     <Compile Include="Mappers\OrderRepresentationMapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -109,11 +109,11 @@
     <Compile Include="Representations\RepresentationBase.cs" />
     <Compile Include="Domain\Size.cs" />
     <Compile Include="Representations\RestbucksRelationExtensions.cs" />
-    <Compile Include="ResourceBinding.asax.cs" />
+    <Compile Include="ResourceBinding.cs" />
     <Compile Include="Resources\OrderResource.cs" />
-    <Compile Include="RestbucksConfiguration.asax.cs" />
+    <Compile Include="RestbucksConfiguration.cs" />
     <Compile Include="RestbucksMediaTypeProcessor.cs" />
-    <Compile Include="RestbucksResources.asax.cs" />
+    <Compile Include="RestbucksResources.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
