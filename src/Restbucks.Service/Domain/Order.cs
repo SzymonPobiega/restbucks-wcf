@@ -5,7 +5,7 @@ namespace Restbucks.Service.Domain
 {
     public class Order
     {
-        public virtual int Id { get; protected set; }
+        public virtual int Id { get; internal set; }
 
         protected virtual List<Item> ItemsCollection { get; set; }
         public virtual IEnumerable<Item> Items

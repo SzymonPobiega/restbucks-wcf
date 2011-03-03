@@ -3,6 +3,7 @@ using System.Net.Http;
 using NUnit.Framework;
 using Restbucks.Service.Activities;
 using Restbucks.Service.Domain;
+using Restbucks.Service.Infrastructure;
 using Restbucks.Service.Mappers;
 using Restbucks.Service.Representations;
 using Restbucks.Service.Resources;
