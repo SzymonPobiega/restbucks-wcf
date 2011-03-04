@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.restbucks.net" elementFormDefault="qualified" targetNamespace="http://schemas.restbucks.net" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import namespace="http://schemas.restbucks.net/dap" />
+  <xs:include schemaLocation="http://schemas.restbucks.net/restbucks-common.xsd"/>
+  <xs:element name="payment" nillable="true" type="tns:PaymentRepresentation" />
+  <xs:complexType name="PaymentRepresentation">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:RepresentationBase">
+        <xs:sequence>
+          <xs:element minOccurs="1" maxOccurs="1" name="expiryYear" type="xs:int" />
+          <xs:element minOccurs="1" maxOccurs="1" name="expiryMonth" type="xs:int" />
+          <xs:element minOccurs="0" maxOccurs="1" name="cardNumber" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="1" name="cardholderName" type="xs:string" />
+          <xs:element minOccurs="1" maxOccurs="1" name="amount" type="xs:decimal" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+</xs:schema>

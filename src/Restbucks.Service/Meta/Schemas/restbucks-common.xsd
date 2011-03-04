@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.restbucks.net" elementFormDefault="qualified" targetNamespace="http://schemas.restbucks.net" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import namespace="http://schemas.restbucks.net/dap" />
+  <xs:complexType name="RepresentationBase" abstract="true">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="link" xmlns:q1="http://schemas.restbucks.net/dap" type="q1:Link" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="order" nillable="true" type="tns:OrderRepresentation" />
+</xs:schema>

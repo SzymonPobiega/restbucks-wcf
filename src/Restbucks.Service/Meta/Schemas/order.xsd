@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.restbucks.net" elementFormDefault="qualified" targetNamespace="http://schemas.restbucks.net" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import namespace="http://schemas.restbucks.net/dap" />
+  <xs:include schemaLocation="http://schemas.restbucks.net/restbucks-common.xsd"/>
+  <xs:complexType name="item">
+    <xs:sequence>
+      <xs:element minOccurs="1" maxOccurs="1" name="milk" type="tns:Milk" />
+      <xs:element minOccurs="1" maxOccurs="1" name="size" type="tns:Size" />
+      <xs:element minOccurs="1" maxOccurs="1" name="drink" type="tns:Drink" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="Milk">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="whole" />
+      <xs:enumeration value="skim" />
+      <xs:enumeration value="semi" />
+      <xs:enumeration value="none" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="Size">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Small" />
+      <xs:enumeration value="Medium" />
+      <xs:enumeration value="Large" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="Drink">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="espresso" />
+      <xs:enumeration value="latte" />
+      <xs:enumeration value="cappuccino" />
+      <xs:enumeration value="flatWhite" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="order" nillable="true" type="tns:OrderRepresentation" />
+  <xs:complexType name="OrderRepresentation">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:RepresentationBase">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="tns:item" />
+          <xs:element minOccurs="1" maxOccurs="1" name="location" type="tns:Location" />
+          <xs:element minOccurs="1" maxOccurs="1" name="cost" type="xs:decimal" />
+          <xs:element minOccurs="1" maxOccurs="1" name="status" type="tns:OrderStatus" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:simpleType name="Location">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="takeaway" />
+      <xs:enumeration value="inStore" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="OrderStatus">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="unpaid" />
+      <xs:enumeration value="preparing" />
+      <xs:enumeration value="ready" />
+      <xs:enumeration value="taken" />
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

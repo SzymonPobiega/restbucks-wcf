@@ -51,6 +51,7 @@
     <Reference Include="Microsoft.ServiceModel.WebHttp">
       <HintPath>..\..\lib\WcfWebApis\Microsoft.ServiceModel.WebHttp.dll</HintPath>
     </Reference>
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.ServiceModel.Activation" />
     <Reference Include="System.ServiceModel.Web" />
@@ -71,8 +72,9 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="default.aspx" />
     <Content Include="Global.asax" />
+    <Content Include="Meta\Relations\order.htm" />
+    <Content Include="Meta\Relations\payment.htm" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -88,13 +90,6 @@
     <Compile Include="Activities\ICreateOrderActivity.cs" />
     <Compile Include="Activities\IReadReceiptActivity.cs" />
     <Compile Include="Activities\ReadReceiptActivity.cs" />
-    <Compile Include="default.aspx.cs">
-      <DependentUpon>default.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="default.aspx.designer.cs">
-      <DependentUpon>default.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -137,10 +132,31 @@
     <Compile Include="ResourceBinding.cs" />
     <Compile Include="Resources\OrderResource.cs" />
     <Compile Include="RestbucksConfiguration.cs" />
+    <Compile Include="RestbucksHostFactory.cs" />
     <Compile Include="RestbucksMediaTypeProcessor.cs" />
     <Compile Include="RestbucksResources.cs" />
   </ItemGroup>
   <ItemGroup />
+  <ItemGroup>
+    <None Include="Meta\Schemas\order.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Meta\Schemas\payment.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Meta\Schemas\receipt.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Meta\Schemas\restbucks-common.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Meta\Schemas\dap.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Meta\Schemas\restbucks.xsd">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
   <ProjectExtensions>

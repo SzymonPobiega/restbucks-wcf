@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.restbucks.net" elementFormDefault="qualified" targetNamespace="http://schemas.restbucks.net" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import namespace="http://schemas.restbucks.net/dap" />
+  <xs:include schemaLocation="http://schemas.restbucks.net/restbucks-common.xsd"/>
+  <xs:include schemaLocation="http://schemas.restbucks.net/order.xsd"/>
+  <xs:include schemaLocation="http://schemas.restbucks.net/payment.xsd"/>
+  <xs:include schemaLocation="http://schemas.restbucks.net/receipt.xsd"/>
+</xs:schema>

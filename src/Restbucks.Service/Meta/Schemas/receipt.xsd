@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.restbucks.net" elementFormDefault="qualified" targetNamespace="http://schemas.restbucks.net" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import namespace="http://schemas.restbucks.net/dap" />
+  <xs:include schemaLocation="http://schemas.restbucks.net/restbucks-common.xsd"/>
+  <xs:element name="receipt" nillable="true" type="tns:ReceiptRepresentation" />
+  <xs:complexType name="ReceiptRepresentation">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:RepresentationBase">
+        <xs:sequence>
+          <xs:element minOccurs="1" maxOccurs="1" name="amount" type="xs:decimal" />
+          <xs:element minOccurs="0" maxOccurs="1" name="paid" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+</xs:schema>
