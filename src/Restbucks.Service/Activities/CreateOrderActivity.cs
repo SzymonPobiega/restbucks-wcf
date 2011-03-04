@@ -17,13 +17,13 @@ namespace Restbucks.Service.Activities
             _orderRepresentationMapper = orderRepresentationMapper;
         }
 
-        public OrderRepresentation Create(OrderRepresentation orderRepresentation, string baseUri)
+        public OrderRepresentation Create(OrderRepresentation orderRepresentation, Uri requestUri)
         {
             var newOrder = _orderRepresentationMapper.GetDomainObject(orderRepresentation);
             var orderId = _repository.Store(newOrder);
 
-            var orderUri = RestbucksResources.GetResourceUri<OrderResource>(baseUri, orderId.ToString());
-            var paymentUri = RestbucksResources.GetResourceUri<PaymentResource>(baseUri, orderId.ToString());
+            var orderUri = RestbucksResources.GetResourceUri<OrderResource>(requestUri, orderId.ToString());
+            var paymentUri = RestbucksResources.GetResourceUri<PaymentResource>(requestUri, orderId.ToString());
 
             var result = _orderRepresentationMapper.GetRepresentation(newOrder);
             result.UpdateLink = orderUri;

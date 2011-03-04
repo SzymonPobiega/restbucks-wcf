@@ -17,7 +17,7 @@ namespace Restbucks.Service.Activities
             _paymentMapper = paymentMapper;
         }
 
-        public PaymentRepresentation Pay(int orderId, PaymentRepresentation paymentRepresentation, string baseUri)
+        public PaymentRepresentation Pay(int orderId, PaymentRepresentation paymentRepresentation, Uri requestUri)
         {
             var order = _repository.FindById(orderId);
             if (order == null)
@@ -32,8 +32,8 @@ namespace Restbucks.Service.Activities
             var payment = _paymentMapper.GetDomainObject(paymentRepresentation);
             order.Pay(payment);
             var representation = _paymentMapper.GetRepresentation(order.PaymentInfo);
-            representation.OrderLink = RestbucksResources.GetResourceUri<OrderResource>(baseUri, order.Id.ToString());
-            representation.ReceiptLink = RestbucksResources.GetResourceUri<ReceiptResource>(baseUri, orderId.ToString());
+            representation.OrderLink = RestbucksResources.GetResourceUri<OrderResource>(requestUri, order.Id.ToString());
+            representation.ReceiptLink = RestbucksResources.GetResourceUri<ReceiptResource>(requestUri, orderId.ToString());
             return representation;
         }
     }

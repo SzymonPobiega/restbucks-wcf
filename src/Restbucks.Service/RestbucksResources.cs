@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
+using System.ServiceModel;
 using System.ServiceModel.Activation;
+using System.Web;
 using System.Web.Routing;
 using Microsoft.ServiceModel.Http;
 using Restbucks.Service.Resources;
@@ -11,6 +14,7 @@ namespace Restbucks.Service
     public static class RestbucksResources
     {
         private static readonly List<ResourceBinding> _resources = new List<ResourceBinding>();
+        private static readonly string _baseAddress;
 
         private static void Bind<T>(string relativeUri)
         {
@@ -22,6 +26,7 @@ namespace Restbucks.Service
             Bind<OrderResource>("order");
             Bind<PaymentResource>("payment");
             Bind<ReceiptResource>("receipt");
+            _baseAddress = ConfigurationManager.AppSettings["baseAddress"];
         }
 
         public static void RegisterRoutes(HttpHostConfiguration configuration)
@@ -32,9 +37,10 @@ namespace Restbucks.Service
             }
         }
 
-        public static string GetResourceUri<T>(string baseUri, string suffix)
+        public static string GetResourceUri<T>(Uri requestUri, string suffix)
         {
-            return baseUri + "/" + GetResourceUri<T>() + "/" + suffix;
+            var result = _baseAddress + "/" + GetResourceUri<T>() + "/" + suffix;
+            return result;
         }
 
         public static string GetResourceUri<T>()

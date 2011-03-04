@@ -11,7 +11,8 @@ namespace Restbucks.Client.Console
     {
         static void Main(string[] args)
         {
-            var client = new RestbucksClient("http://localhost:52836");
+            //var client = new RestbucksClient("http://restbucks.net");
+            var client = new RestbucksClient("http://localhost/Restbucks");        
             System.Console.WriteLine("Press enter to send order");
             System.Console.ReadLine();
             var order = client.CreateOrder(CreateOrder());

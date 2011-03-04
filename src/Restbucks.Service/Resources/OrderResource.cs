@@ -28,9 +28,8 @@ namespace Restbucks.Service.Resources
             RequestFormat = WebMessageFormat.Xml, 
             ResponseFormat = WebMessageFormat.Xml)]
         public OrderRepresentation Create(OrderRepresentation orderRepresentation, HttpRequestMessage requestMessage, HttpResponseMessage responseMessage)
-        {
-            var baseUri = requestMessage.RequestUri.GetLeftPart(UriPartial.Authority);
-            var response = _createOrderActivity.Create(orderRepresentation, baseUri);
+        {            
+            var response = _createOrderActivity.Create(orderRepresentation, requestMessage.RequestUri);
             responseMessage.StatusCode = HttpStatusCode.Created;
             responseMessage.Headers.Location = new Uri(response.UpdateLink);
             return response;
@@ -42,13 +41,12 @@ namespace Restbucks.Service.Resources
             ResponseFormat = WebMessageFormat.Xml)]
         public OrderRepresentation Get(string orderId, HttpRequestMessage requestMessage, HttpResponseMessage responseMessage)
         {
-            var baseUri = requestMessage.RequestUri.GetLeftPart(UriPartial.Authority);
             int id;
             if (int.TryParse(orderId, out id))
             {
                 try
                 {
-                    var response = _readOrderActivity.Read(id, baseUri);
+                    var response = _readOrderActivity.Read(id, requestMessage.RequestUri);
                     responseMessage.StatusCode = HttpStatusCode.OK;
                     return response;
                 }

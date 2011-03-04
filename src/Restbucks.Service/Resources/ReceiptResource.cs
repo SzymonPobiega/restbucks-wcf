@@ -32,8 +32,7 @@ namespace Restbucks.Service.Resources
             {
                 try
                 {
-                    var baseUri = requestMessage.RequestUri.GetLeftPart(UriPartial.Authority);
-                    var response = _readReceiptActivity.Read(id, baseUri);
+                    var response = _readReceiptActivity.Read(id, requestMessage.RequestUri);
                     return response;
                 }
                 catch (NoSuchOrderException)

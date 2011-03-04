@@ -71,6 +71,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="default.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -87,6 +88,16 @@
     <Compile Include="Activities\ICreateOrderActivity.cs" />
     <Compile Include="Activities\IReadReceiptActivity.cs" />
     <Compile Include="Activities\ReadReceiptActivity.cs" />
+    <Compile Include="default.aspx.cs">
+      <DependentUpon>default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="default.aspx.designer.cs">
+      <DependentUpon>default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
     <Compile Include="Mappers\ReceiptRepresentationMapper.cs" />
     <Compile Include="Domain\InvalidPaymentException.cs" />
     <Compile Include="Activities\IPaymentActivity.cs" />
@@ -107,9 +118,6 @@
     <Compile Include="Domain\Location.cs" />
     <Compile Include="Domain\Order.cs" />
     <Compile Include="Extensions.cs" />
-    <Compile Include="Global.asax.cs">
-      <DependentUpon>Global.asax</DependentUpon>
-    </Compile>
     <Compile Include="Infrastructure\InMemoryOrderRepository.cs" />
     <Compile Include="MainModule.cs" />
     <Compile Include="Mappers\ItemRepresentationMapper.cs" />
@@ -139,12 +147,11 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>False</UseIIS>
+          <UseIIS>True</UseIIS>
           <AutoAssignPort>False</AutoAssignPort>
           <DevelopmentServerPort>52836</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>
-          </IISUrl>
+          <IISUrl>http://localhost/Restbucks</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

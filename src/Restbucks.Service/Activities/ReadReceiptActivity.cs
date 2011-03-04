@@ -17,7 +17,7 @@ namespace Restbucks.Service.Activities
             _receiptMapper = receiptMapper;
         }
 
-        public ReceiptRepresentation Read(int orderId, string baseUri)
+        public ReceiptRepresentation Read(int orderId, Uri requestUri)
         {
             var order = _repository.FindById(orderId);
             if (order == null)
@@ -25,8 +25,8 @@ namespace Restbucks.Service.Activities
                 throw new NoSuchOrderException(orderId);
             }
             var representation = _receiptMapper.GetRepresentation(order);
-            representation.OrderLink = RestbucksResources.GetResourceUri<OrderResource>(baseUri, orderId.ToString());
-            representation.CompleteLink = RestbucksResources.GetResourceUri<ReceiptResource>(baseUri, orderId.ToString());
+            representation.OrderLink = RestbucksResources.GetResourceUri<OrderResource>(requestUri, orderId.ToString());
+            representation.CompleteLink = RestbucksResources.GetResourceUri<ReceiptResource>(requestUri, orderId.ToString());
             return representation;
         }
     }

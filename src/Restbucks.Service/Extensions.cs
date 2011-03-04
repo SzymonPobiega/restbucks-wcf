@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace Restbucks.Service
 {
@@ -12,6 +13,11 @@ namespace Restbucks.Service
                 return default(TProjection);
             }
             return projection(target);
+        }
+
+        public static string GetParentUriString(this Uri uri)
+        {
+            return uri.AbsoluteUri.Remove(uri.AbsoluteUri.Length - uri.Segments.Last().Length);
         }
     }
 }

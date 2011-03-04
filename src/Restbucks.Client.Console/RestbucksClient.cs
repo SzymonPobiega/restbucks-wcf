@@ -17,11 +17,11 @@ namespace Restbucks.Client.Console
 
         public OrderRepresentation CreateOrder(OrderRepresentation order)
         {
-            var httpClient = new HttpClient(_baseUri);
+            var httpClient = new HttpClient();
             var serializer = new XmlSerializer(typeof(OrderRepresentation));
             var content = order.ToContentUsingXmlSerializer(serializer);
             content.Headers.ContentType = new MediaTypeHeaderValue(RepresentationBase.RestbucksMediaType);
-            var responseMessage = httpClient.Post("/order", content);
+            var responseMessage = httpClient.Post(_baseUri+"/order", content);
             var responseContent = responseMessage.Content.ReadAsXmlSerializable<OrderRepresentation>(serializer);
             return responseContent;
         }

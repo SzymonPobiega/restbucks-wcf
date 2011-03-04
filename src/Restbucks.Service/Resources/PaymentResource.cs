@@ -31,8 +31,7 @@ namespace Restbucks.Service.Resources
             {
                 try
                 {
-                    var baseUri = requestMessage.RequestUri.GetLeftPart(UriPartial.Authority);
-                    var response = _paymentActivity.Pay(id, paymentRepresentation, baseUri);
+                    var response = _paymentActivity.Pay(id, paymentRepresentation, requestMessage.RequestUri);
                     responseMessage.StatusCode = HttpStatusCode.Created;
                     responseMessage.Headers.Location = requestMessage.RequestUri;
                     return response;

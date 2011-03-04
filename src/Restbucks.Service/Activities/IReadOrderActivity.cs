@@ -1,9 +1,10 @@
-﻿using Restbucks.Service.Representations;
+﻿using System;
+using Restbucks.Service.Representations;
 
 namespace Restbucks.Service.Activities
 {
     public interface IReadOrderActivity
     {
-        OrderRepresentation Read(int orderId, string baseUri);
+        OrderRepresentation Read(int orderId, Uri requestUri);
     }
 }
