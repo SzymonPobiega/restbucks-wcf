@@ -19,7 +19,6 @@ namespace Restbucks.Service
             containerBuilder.RegisterModule(new MainModule());
             var container = containerBuilder.Build();
             _configuration = new RestbucksConfiguration(container);
-            //RestbucksResources.RegisterRoutes(Configuration);
         }
     }
 }
