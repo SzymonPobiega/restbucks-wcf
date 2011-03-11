@@ -19,9 +19,9 @@
   </xs:simpleType>
   <xs:simpleType name="Size">
     <xs:restriction base="xs:string">
-      <xs:enumeration value="Small" />
-      <xs:enumeration value="Medium" />
-      <xs:enumeration value="Large" />
+      <xs:enumeration value="small" />
+      <xs:enumeration value="medium" />
+      <xs:enumeration value="large" />
     </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="Drink">
