@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Restbucks.Service.Tests", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Restbucks.Client.Console", "Restbucks.Client.Console\Restbucks.Client.Console.csproj", "{5E26DD82-5BB2-4688-8AE1-8C8BCA6FC3DC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Restbucks.Site", "Restbucks.Site\Restbucks.Site.csproj", "{184C1AE3-3776-4899-94B5-DCE483A848A3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +49,16 @@ Global
 		{5E26DD82-5BB2-4688-8AE1-8C8BCA6FC3DC}.Release|Mixed Platforms.Build.0 = Release|x86
 		{5E26DD82-5BB2-4688-8AE1-8C8BCA6FC3DC}.Release|x86.ActiveCfg = Release|x86
 		{5E26DD82-5BB2-4688-8AE1-8C8BCA6FC3DC}.Release|x86.Build.0 = Release|x86
+		{184C1AE3-3776-4899-94B5-DCE483A848A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{184C1AE3-3776-4899-94B5-DCE483A848A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{184C1AE3-3776-4899-94B5-DCE483A848A3}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{184C1AE3-3776-4899-94B5-DCE483A848A3}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{184C1AE3-3776-4899-94B5-DCE483A848A3}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{184C1AE3-3776-4899-94B5-DCE483A848A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{184C1AE3-3776-4899-94B5-DCE483A848A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{184C1AE3-3776-4899-94B5-DCE483A848A3}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{184C1AE3-3776-4899-94B5-DCE483A848A3}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{184C1AE3-3776-4899-94B5-DCE483A848A3}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
