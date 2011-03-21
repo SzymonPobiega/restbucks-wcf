@@ -1,4 +1,5 @@
 using System;
+using System.Configuration;
 using System.Net;
 using System.Net.Http;
 using System.ServiceModel;
@@ -33,6 +34,18 @@ namespace Restbucks.Service.Resources
             responseMessage.StatusCode = HttpStatusCode.Created;
             responseMessage.Headers.Location = new Uri(response.UpdateLink);
             return response;
+        }
+
+        [WebGet(
+           UriTemplate = "/",
+           RequestFormat = WebMessageFormat.Xml,
+           ResponseFormat = WebMessageFormat.Xml)]
+        public void GetClientOrderSchema(HttpResponseMessage responseMessage)
+        {
+            var schemaBase = ConfigurationManager.AppSettings["schemasBaseAddress"];
+            var clientOrderSchemaUri = schemaBase + "/" + "client-order.xsd";
+            responseMessage.Headers.Location = new Uri(clientOrderSchemaUri);
+            responseMessage.StatusCode = HttpStatusCode.Redirect;
         }
 
         [WebGet(

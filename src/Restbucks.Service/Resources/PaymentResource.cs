@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Net;
 using System.Net.Http;
 using System.ServiceModel;
@@ -17,6 +18,18 @@ namespace Restbucks.Service.Resources
         public PaymentResource(IPaymentActivity paymentActivity)
         {
             _paymentActivity = paymentActivity;
+        }
+
+        [WebGet(
+           UriTemplate = "/{paymentId}",
+           RequestFormat = WebMessageFormat.Xml,
+           ResponseFormat = WebMessageFormat.Xml)]
+        public void GetPaymentSchema(HttpResponseMessage responseMessage)
+        {
+            var schemaBase = ConfigurationManager.AppSettings["schemasBaseAddress"];
+            var clientOrderSchemaUri = schemaBase + "/" + "payment.xsd";
+            responseMessage.Headers.Location = new Uri(clientOrderSchemaUri);
+            responseMessage.StatusCode = HttpStatusCode.Redirect;
         }
 
         [WebInvoke(

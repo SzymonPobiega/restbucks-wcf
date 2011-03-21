@@ -73,6 +73,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
+    <Content Include="Meta\Relations\update.htm" />
+    <Content Include="Meta\Relations\receipt.htm" />
+    <Content Include="Meta\Relations\cancel.htm" />
     <Content Include="Meta\Relations\order.htm" />
     <Content Include="Meta\Relations\payment.htm" />
     <Content Include="Web.config" />
@@ -138,6 +141,9 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <None Include="Meta\Schemas\client-order.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Meta\Schemas\order.xsd">
       <SubType>Designer</SubType>
     </None>
