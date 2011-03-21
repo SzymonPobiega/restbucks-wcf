@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Web;
+using System.Web.Routing;
 using Autofac;
 
 namespace Restbucks.Service
@@ -19,6 +20,7 @@ namespace Restbucks.Service
             containerBuilder.RegisterModule(new MainModule());
             var container = containerBuilder.Build();
             _configuration = new RestbucksConfiguration(container);
+            RestbucksResources.RegisterRoutes(Configuration);
         }
     }
 }
