@@ -27,3 +27,8 @@ obj/
 [Rr]elease*/
 _ReSharper*/
 [Tt]est[Rr]esult*
+lib/HttpClient/Microsoft.Net.Http.dll
+lib/HttpExtensions/Microsoft.Http.Extensions.dll
+lib/QueryComposition/Microsoft.QueryComposition.dll
+lib/WcfWebApis/Microsoft.ServiceModel.Http.dll
+lib/WcfWebApis/Microsoft.ServiceModel.WebHttp.dll
