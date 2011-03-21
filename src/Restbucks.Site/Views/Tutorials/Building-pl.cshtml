@@ -1,0 +1,41 @@
+﻿@{
+    ViewBag.Title = "Budowanie aplikacji";
+}
+
+<h3>Budowanie aplikacji</h3>
+<p>
+    <span class="restbucks">Restbucks.net</span> wykorzystuje dwia z najnowszych frameworków związanych z .NET: ASP.NET MVC 3 oraz 
+    WCF Web APIs. Jest napisany w C# 4 przy uzyciu VisualStudio 2010.    
+</p>
+<p>
+   Oto kroki wymagane do zbudowania i uruchomienia aplikacji
+</p>
+<ol>
+    <li>Zobąć źródła klonując repozytorium git'a
+    <pre>git://github.com/SzymonPobiega/restbucks-wcf.git</pre>
+    lub pobierając je bezpośrednio <a href="https://github.com/SzymonPobiega/restbucks-wcf/zipball/master">stąd</a>.
+    </li>
+    <li>
+    Zdobąć binaria lub źródła WCF Web APIs ze <a href="http://wcf.codeplex.com">strony projektu</a> na codeplex'ie.
+    </li>
+    <li>
+    Zbuduj WCF Web APIs.
+    </li>
+    <li>
+    Otwórz folder 'buid' WCF Web APIs oraz 'lib' Restbucks.
+    </li>
+    <li>
+    Dla każdego pliku <em>.dll.txt</em> z katalogu 'lib', znajdź odpowiadający mu plik <em>.dll</em> w katalogu 'build' i skopiuj
+    go do tej samej lokalizacji co plik <em>.dll.txt</em>.
+    </li>
+    <li>
+    Zbuduj Restbucks.
+    </li>
+    <li>
+    Uruchom klienta (projekt <em>Restbucks.Client.Console</em>).
+    </li>
+    <li>
+    Jeśli chciałbyś uruchomić serwer na swojej maszynie, zmodyfikuj adres bazowy klienta w pliku Program.cs
+    a następnie uruchom usługę (<em>Restbucks.Service</em> project) na lokalnym serwerze IIS (lub Cassini). 
+    </li>
+</ol>

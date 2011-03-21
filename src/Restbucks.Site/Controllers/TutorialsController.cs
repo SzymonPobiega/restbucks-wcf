@@ -16,5 +16,14 @@ namespace Restbucks.Site.Controllers
             }
             return View();
         }
+
+        public ActionResult Building()
+        {
+            if (IsPolish())
+            {
+                return View("Building-pl");
+            }
+            return View();
+        }
     }
 }

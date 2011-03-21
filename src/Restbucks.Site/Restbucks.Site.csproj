@@ -164,7 +164,8 @@
     <Content Include="Views\API\LinkRelations.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\API\Resources.cshtml" />
+    <None Include="Views\API\Resources-pl.cshtml" />
+    <Content Include="Views\Tutorials\Building.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Tutorials\Index.cshtml" />
@@ -197,7 +198,7 @@
     <Content Include="Views\API\LinkRelations-pl.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\API\Resources-pl.cshtml" />
+    <Content Include="Views\API\Resources.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
