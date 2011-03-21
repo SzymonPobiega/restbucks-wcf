@@ -1,0 +1,23 @@
+﻿@{
+    ViewBag.Title = "API";
+}
+
+<h3>RESTowe API Restbucks</h3>
+<p>
+    Jednyą z podstawowych cech stylu REST jest łatwość eksploracji API systemu. Poprawna aplikacja RESTowa wykorzystuje dobrze
+    znane konwencje oraz dodaje własne (jeśli istnieje taka potrzeba) aby korzystanie z jej API było dla klienta jak
+    najprostsze.
+</p>
+<p>
+    <span class="restbucks">Restbucks.net</span> wykorzystuje następujace trzy konwencje przy publikowaniu swojego API:
+</p>
+<ul>
+    <li><a href="API/LinkRelations">Typy relacji (Link relations)</a> są poprawnymi URL'ami wskazującymi na dokumenty (X)HTML zawierające opis znaczenia relacji.</li>
+    <li><a href="http://schemas.restbucks.net/">Przestrzeń nazw schemy XML</a> jest poprawnym URL'em wskazującym na plik XSD.</li>
+    <li><a href="API/Resources">Zasoby</a> akceptujące żądania PUT i POST, w odpowiedzi na żądanie GET, zwracają dokument XSD 
+    opisujący format poprawnego żądania PUT/POST do tego zasobu.</li>
+    </ul>
+<p>
+    Te trzy proste konwencje pozwalają klientom <span class="restbucks">Restbucks.net</span> na całym świecie
+    błyskawicznie tworzyć aplikacje klienckie korzystające z API Restbucks z użyciem różnorodnych platform i bibliotek.
+</p>

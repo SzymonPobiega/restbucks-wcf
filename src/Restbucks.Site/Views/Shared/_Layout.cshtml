@@ -24,16 +24,16 @@
         <div id="header">
             <div id="title">
                 <h1><a href="@Url.Action("Index","Home")"><img src="@Url.Content("~/Content/images/logo_150.png")" alt="Restbucks logo" title="Logo"/></a></h1>
-                <h2>World's famous RESTful coffee shop</h2>
+                <h2>@Resources.LayoutRes.Title</h2>
             </div>
 
             <div id="menucontainer">
 
                 <ul id="menu">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Presentation", "Presentation", "Home")</li>
-                    <li>@Html.ActionLink("API", "Index", "API")</li>
-                    <li>@Html.ActionLink("Tutorials", "Index", "Tutorials")</li>
+                    <li>@Html.ActionLink(@Resources.LayoutRes.Home, "Index", "Home")</li>
+                    <li>@Html.ActionLink(@Resources.LayoutRes.Presentation, "Presentation", "Home")</li>
+                    <li>@Html.ActionLink(@Resources.LayoutRes.API, "Index", "API")</li>
+                    <li>@Html.ActionLink(@Resources.LayoutRes.Tutorials, "Index", "Tutorials")</li>
                 </ul>
 
             </div>

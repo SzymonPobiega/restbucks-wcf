@@ -6,20 +6,32 @@ using System.Web.Mvc;
 
 namespace Restbucks.Site.Controllers
 {
-    public class APIController : Controller
+    public class APIController : RestbucksController
     {
         public ActionResult Index()
         {
+            if (IsPolish())
+            {
+                return View("Index-pl");
+            }
             return View();
         }
 
         public ActionResult LinkRelations()
         {
+            if (IsPolish())
+            {
+                return View("LinkRelations-pl");
+            }
             return View();
         }
 
         public ActionResult Resources()
         {
+            if (IsPolish())
+            {
+                return View("Resources-pl");
+            }
             return View();
         }
     }

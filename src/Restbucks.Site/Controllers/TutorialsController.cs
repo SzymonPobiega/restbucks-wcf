@@ -6,10 +6,14 @@ using System.Web.Mvc;
 
 namespace Restbucks.Site.Controllers
 {
-    public class TutorialsController : Controller
+    public class TutorialsController : RestbucksController
     {
         public ActionResult Index()
         {
+            if (IsPolish())
+            {
+                return View("Index-pl");
+            }
             return View();
         }
     }
