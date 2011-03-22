@@ -166,6 +166,7 @@
   <ItemGroup>
     <None Include="Views\API\Resources-pl.cshtml" />
     <Content Include="Views\Tutorials\Building.cshtml" />
+    <Content Include="Views\Tutorials\Building-pl.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Tutorials\Index.cshtml" />
