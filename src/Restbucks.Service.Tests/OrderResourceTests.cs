@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using Microsoft.ApplicationServer.Http;
 using NUnit.Framework;
 using Restbucks.Service.Activities;
 using Restbucks.Service.Domain;
@@ -23,9 +25,8 @@ namespace Restbucks.Service.Tests
         {
             var requestBody = CreateOrder();
 
-            var result = _sut.Create(requestBody,
-                       new HttpRequestMessage(HttpMethod.Post, "http://restbucks.net/order"),
-                       new HttpResponseMessage());
+            var responseMessage = _sut.Create(new HttpRequestMessage<OrderRepresentation>(requestBody, HttpMethod.Post, new Uri("http://restbucks.net/order"), new MediaTypeFormatter[] {}));
+            var result = responseMessage.Content.ReadAs();
 
             Assert.AreEqual(requestBody.Location, result.Location);
             Assert.AreEqual(2.8m, result.Cost);
@@ -40,15 +41,15 @@ namespace Restbucks.Service.Tests
         {
             var requestBody = CreateOrder();
 
-            var createResult = _sut.Create(requestBody,
-                       new HttpRequestMessage(HttpMethod.Post, "http://restbucks.net/order"),
-                       new HttpResponseMessage());
+            var responseMessage = _sut.Create(new HttpRequestMessage<OrderRepresentation>(requestBody, HttpMethod.Post, new Uri("http://restbucks.net/order"), new MediaTypeFormatter[] { }));
+            var createResult = responseMessage.Content.ReadAs();
 
             var parts = createResult.SelfLink.Split('/');
 
-            var getResult = _sut.Get(parts.Last(),
-                                    new HttpRequestMessage(HttpMethod.Get, createResult.SelfLink),
-                                    new HttpResponseMessage());
+            responseMessage = _sut.Get(parts.Last(),
+                                    new HttpRequestMessage(HttpMethod.Get, createResult.SelfLink));
+
+            var getResult = responseMessage.Content.ReadAs();
 
             Assert.AreEqual(getResult.Cost, createResult.Cost);
         }
@@ -59,11 +60,8 @@ namespace Restbucks.Service.Tests
             var order = new Order(Location.InStore, new[] {new Item(Drink.Espresso, Size.Medium, Milk.Semi)});
             order.Pay(new PaymentInformation(1, "", "", 12, 12));
             var id = _repository.Store(order);
-            var responseMessage = new HttpResponseMessage();
 
-            _sut.Cancel(id.ToString(),
-                       new HttpRequestMessage(HttpMethod.Post, "http://restbucks.net/order"),
-                       responseMessage);
+            var responseMessage = _sut.Cancel(id.ToString(), new HttpRequestMessage(HttpMethod.Post, "http://restbucks.net/order"));
 
             Assert.AreEqual(HttpStatusCode.MethodNotAllowed, responseMessage.StatusCode);
         }
@@ -71,11 +69,7 @@ namespace Restbucks.Service.Tests
         [Test]
         public void Canceling_not_existent_order_should_return_404()
         {
-            var responseMessage = new HttpResponseMessage();
-
-            _sut.Cancel("13",
-                       new HttpRequestMessage(HttpMethod.Post, "http://restbucks.net/order"),
-                       responseMessage);
+            var responseMessage =  _sut.Cancel("13", new HttpRequestMessage(HttpMethod.Post, "http://restbucks.net/order"));
 
             Assert.AreEqual(HttpStatusCode.NotFound, responseMessage.StatusCode);
         }
@@ -85,11 +79,8 @@ namespace Restbucks.Service.Tests
         {
             var order = new Order(Location.InStore, new[] { new Item(Drink.Espresso, Size.Large, Milk.Semi) });
             var id = _repository.Store(order);
-            var responseMessage = new HttpResponseMessage();
 
-            _sut.Cancel(id.ToString(),
-                       new HttpRequestMessage(HttpMethod.Post, "http://restbucks.net/order"),
-                       responseMessage);
+            _sut.Cancel(id.ToString(), new HttpRequestMessage(HttpMethod.Post, "http://restbucks.net/order"));
 
             Assert.IsNull(_repository.FindById(id));
         }
@@ -97,6 +88,7 @@ namespace Restbucks.Service.Tests
         [SetUp]
         public void Initialize()
         {
+            RestbucksResources.BaseAddress = "http://restbucks.net";
             _repository = new InMemoryOrderRepository();
             var mapper = new OrderRepresentationMapper(new ItemRepresentationMapper());
             _sut = new OrderResource(

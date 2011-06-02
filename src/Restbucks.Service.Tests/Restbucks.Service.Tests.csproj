@@ -31,17 +31,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.ApplicationServer.Http, Version=0.3.0.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Net.Http">
       <HintPath>..\..\lib\HttpClient\Microsoft.Net.Http.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.QueryComposition">
       <HintPath>..\..\lib\QueryComposition\Microsoft.QueryComposition.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.ServiceModel.Http">
-      <HintPath>..\..\lib\WcfWebApis\Microsoft.ServiceModel.Http.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.ServiceModel.WebHttp">
-      <HintPath>..\..\lib\WcfWebApis\Microsoft.ServiceModel.WebHttp.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework, Version=2.5.9.10348, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

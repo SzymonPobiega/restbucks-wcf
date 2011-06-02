@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Microsoft.Net.Http;
 using Restbucks.Service.Domain;
 using Restbucks.Service.Representations;
 
@@ -11,8 +10,8 @@ namespace Restbucks.Client.Console
     {
         static void Main(string[] args)
         {
-            var client = new RestbucksClient("http://restbucks.net");
-            //var client = new RestbucksClient("http://localhost/Restbucks");        
+            //var client = new RestbucksClient("http://restbucks.net");
+            var client = new RestbucksClient("http://localhost/Restbucks");        
             System.Console.WriteLine("Press enter to send order");
             System.Console.ReadLine();
             var order = client.CreateOrder(CreateOrder());

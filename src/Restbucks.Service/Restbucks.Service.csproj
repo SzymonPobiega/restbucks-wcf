@@ -38,18 +38,27 @@
     <Reference Include="Autofac.Configuration">
       <HintPath>..\..\lib\Autofac\Autofac.Configuration.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.ApplicationServer.Common">
+      <HintPath>..\..\lib\WcfWebApis\Microsoft.ApplicationServer.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ApplicationServer.Http">
+      <HintPath>..\..\lib\WcfWebApis\Microsoft.ApplicationServer.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ApplicationServer.HttpEnhancements">
+      <HintPath>..\..\lib\WcfWebApis\Microsoft.ApplicationServer.HttpEnhancements.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ApplicationServer.Serialization">
+      <HintPath>..\..\lib\WcfWebApis\Microsoft.ApplicationServer.Serialization.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ApplicationServer.ServiceModel">
+      <HintPath>..\..\lib\WcfWebApis\Microsoft.ApplicationServer.ServiceModel.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Net.Http">
       <HintPath>..\..\lib\HttpClient\Microsoft.Net.Http.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.QueryComposition">
       <HintPath>..\..\lib\QueryComposition\Microsoft.QueryComposition.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.ServiceModel.Http">
-      <HintPath>..\..\lib\WcfWebApis\Microsoft.ServiceModel.Http.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.ServiceModel.WebHttp">
-      <HintPath>..\..\lib\WcfWebApis\Microsoft.ServiceModel.WebHttp.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
@@ -134,10 +143,11 @@
     <Compile Include="Representations\RestbucksRelationExtensions.cs" />
     <Compile Include="ResourceBinding.cs" />
     <Compile Include="Resources\OrderResource.cs" />
-    <Compile Include="RestbucksConfiguration.cs" />
     <Compile Include="RestbucksHostFactory.cs" />
-    <Compile Include="RestbucksMediaTypeProcessor.cs" />
+    <Compile Include="RestbucksMediaTypeFormatter.cs" />
+    <Compile Include="RestbucksResourceFactory.cs" />
     <Compile Include="RestbucksResources.cs" />
+    <Compile Include="RestbucksServiceHostFactory.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

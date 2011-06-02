@@ -1,0 +1,41 @@
+﻿@{
+    ViewBag.Title = "Implementing ordering user story";
+}
+
+<h3>Implementing ordering user story</h3>
+<h2>Resource model</h2>
+<p>
+    First, we must decide what resources should be responsible for implementing the ordering. In this example we use    
+</p>
+<p>
+    Here are the steps required to build the samples from the source code.
+</p>
+<ol>
+    <li>Get the source code, either by cloning git repository
+    <pre>git://github.com/SzymonPobiega/restbucks-wcf.git</pre>
+    or by downloading the latest source code from <a href="https://github.com/SzymonPobiega/restbucks-wcf/zipball/master">here</a>.
+    </li>
+    <li>
+    Get WCF Web APIs binaries or source code from <a href="http://wcf.codeplex.com">its website</a> at codeplex.
+    </li>
+    <li>
+    Build WCF Web APIs.
+    </li>
+    <li>
+    Open 'build' folder of WCF Web APIs and 'lib' folder of Restbucks.
+    </li>
+    <li>
+    For every <em>.dll.txt</em> file in 'lib' folder, find corresponding <em>.dll</em> file in 'build' folder and copy
+    it to the same location as <em>.dll.txt</em>.
+    </li>
+    <li>
+    Build Restbucks.
+    </li>
+    <li>
+    Run the client (<em>Restbucks.Client.Console</em> project).
+    </li>
+    <li>
+    If you want to run the client against the local service instance, modify the root URL in the client code (Program.cs)
+    and run the service (<em>Restbucks.Service</em> project) locally. 
+    </li>
+</ol>

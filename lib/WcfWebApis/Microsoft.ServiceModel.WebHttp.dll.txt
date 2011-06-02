@@ -1,1 +1,0 @@
-Due to licensing issues I can't attach a dll here. Please download the source code of WCF Web APIs from http://wcf.codeplex.com/ and put the built dll here. 

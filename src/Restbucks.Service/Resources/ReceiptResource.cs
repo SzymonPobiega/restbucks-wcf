@@ -3,6 +3,7 @@ using System.Net;
 using System.Net.Http;
 using System.ServiceModel;
 using System.ServiceModel.Web;
+using Microsoft.ApplicationServer.Http;
 using Restbucks.Service.Activities;
 using Restbucks.Service.Domain;
 using Restbucks.Service.Representations;
@@ -25,7 +26,7 @@ namespace Restbucks.Service.Resources
             UriTemplate = "/{orderId}",
             RequestFormat = WebMessageFormat.Xml,
             ResponseFormat = WebMessageFormat.Xml)]
-        public ReceiptRepresentation Get(string orderId, HttpRequestMessage requestMessage, HttpResponseMessage responseMessage)
+        public HttpResponseMessage<ReceiptRepresentation> Get(string orderId, HttpRequestMessage requestMessage)
         {
             int id;
             if (int.TryParse(orderId, out id))
@@ -33,16 +34,14 @@ namespace Restbucks.Service.Resources
                 try
                 {
                     var response = _readReceiptActivity.Read(id, requestMessage.RequestUri);
-                    return response;
+                    return new HttpResponseMessage<ReceiptRepresentation>(response, HttpStatusCode.OK);
                 }
                 catch (NoSuchOrderException)
                 {
-                    responseMessage.StatusCode = HttpStatusCode.NotFound;
-                    return null;
+                    return new HttpResponseMessage<ReceiptRepresentation>(HttpStatusCode.NotFound);                    
                 }
             }
-            responseMessage.StatusCode = HttpStatusCode.BadRequest;
-            return null;
+            return new HttpResponseMessage<ReceiptRepresentation>(HttpStatusCode.BadRequest);            
         }
 
         [WebInvoke(
@@ -50,7 +49,7 @@ namespace Restbucks.Service.Resources
             UriTemplate = "/{orderId}",
             RequestFormat = WebMessageFormat.Xml,
             ResponseFormat = WebMessageFormat.Xml)]
-        public OrderRepresentation Complete(string orderId, HttpRequestMessage requestMessage, HttpResponseMessage responseMessage)
+        public HttpResponseMessage<OrderRepresentation> Complete(string orderId, HttpRequestMessage requestMessage)
         {
             int id;
             if (int.TryParse(orderId, out id))
@@ -58,21 +57,18 @@ namespace Restbucks.Service.Resources
                 try
                 {
                     var response = _completeOrderActivity.Complete(id);
-                    return response;
+                    return new HttpResponseMessage<OrderRepresentation>(response, HttpStatusCode.OK);
                 }
                 catch (NoSuchOrderException)
                 {
-                    responseMessage.StatusCode = HttpStatusCode.NotFound;
-                    return null;
+                    return new HttpResponseMessage<OrderRepresentation>(HttpStatusCode.NotFound);                    
                 }
                 catch (UnexpectedOrderStateException)
                 {
-                    responseMessage.StatusCode = HttpStatusCode.BadRequest;
-                    return null;
+                    return new HttpResponseMessage<OrderRepresentation>(HttpStatusCode.BadRequest);                    
                 }
             }
-            responseMessage.StatusCode = HttpStatusCode.BadRequest;
-            return null;
+            return new HttpResponseMessage<OrderRepresentation>(HttpStatusCode.BadRequest);            
         }
     }
 }

@@ -11,7 +11,8 @@
     <RootNamespace>Restbucks.Client.Console</RootNamespace>
     <AssemblyName>Restbucks.Client.Console</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
@@ -34,11 +35,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.Http.Extensions">
-      <HintPath>..\..\lib\HttpExtensions\Microsoft.Http.Extensions.dll</HintPath>
+    <Reference Include="Microsoft.ApplicationServer.Http">
+      <HintPath>..\..\lib\WcfWebApis\Microsoft.ApplicationServer.Http.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Net.Http">
       <HintPath>..\..\lib\HttpClient\Microsoft.Net.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Runtime.Serialization.Json">
+      <HintPath>..\..\lib\WcfWebApis\Microsoft.Runtime.Serialization.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -91,11 +95,16 @@
     <Compile Include="..\Restbucks.Service\Representations\RestbucksRelationExtensions.cs">
       <Link>Representations\RestbucksRelationExtensions.cs</Link>
     </Compile>
+    <Compile Include="..\Restbucks.Service\RestbucksMediaTypeFormatter.cs">
+      <Link>RestbucksMediaTypeFormatter.cs</Link>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RestbucksClient.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="app.config" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -25,14 +26,11 @@ namespace Restbucks.Service.Tests
             order.Pay(new PaymentInformation(1, "", "", 12, 12));
             var id = _repository.Store(order);
 
-            var responseMessage = new HttpResponseMessage();
-
-            var responseBody = _sut.Get(id.ToString(),
-                     new HttpRequestMessage(HttpMethod.Get, "http://restbucks.net/receipt/" + id),
-                     responseMessage);
+            var responseMessage = _sut.Get(id.ToString(), new HttpRequestMessage(HttpMethod.Get, new Uri("http://restbucks.net/receipt/" + id)));
+            var result = responseMessage.Content.ReadAs();
 
             Assert.AreEqual(HttpStatusCode.OK, responseMessage.StatusCode);
-            Assert.AreEqual(1m, responseBody.AmountPaid);
+            Assert.AreEqual(1m, result.AmountPaid);
         }
 
         private static Order CreateOrder()
@@ -43,6 +41,7 @@ namespace Restbucks.Service.Tests
         [SetUp]
         public void Initialize()
         {
+            RestbucksResources.BaseAddress = "http://restbucks.net";
             _repository = new InMemoryOrderRepository();
             var mapper = new ReceiptRepresentationMapper();
             var orderMapper = new OrderRepresentationMapper(new ItemRepresentationMapper());

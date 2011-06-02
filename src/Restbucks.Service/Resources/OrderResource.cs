@@ -4,6 +4,7 @@ using System.Net;
 using System.Net.Http;
 using System.ServiceModel;
 using System.ServiceModel.Web;
+using Microsoft.ApplicationServer.Http;
 using Restbucks.Service.Activities;
 using Restbucks.Service.Representations;
 
@@ -28,31 +29,32 @@ namespace Restbucks.Service.Resources
             UriTemplate = "/",
             RequestFormat = WebMessageFormat.Xml, 
             ResponseFormat = WebMessageFormat.Xml)]
-        public OrderRepresentation Create(OrderRepresentation orderRepresentation, HttpRequestMessage requestMessage, HttpResponseMessage responseMessage)
-        {            
-            var response = _createOrderActivity.Create(orderRepresentation, requestMessage.RequestUri);
-            responseMessage.StatusCode = HttpStatusCode.Created;
+        public HttpResponseMessage<OrderRepresentation> Create(HttpRequestMessage<OrderRepresentation> request)
+        {
+            var response = _createOrderActivity.Create(request.Content.ReadAs(), request.RequestUri);
+            var responseMessage = new HttpResponseMessage<OrderRepresentation>(response, HttpStatusCode.Created);
             responseMessage.Headers.Location = new Uri(response.UpdateLink);
-            return response;
+            return responseMessage;
         }
 
         [WebGet(
            UriTemplate = "/",
            RequestFormat = WebMessageFormat.Xml,
            ResponseFormat = WebMessageFormat.Xml)]
-        public void GetClientOrderSchema(HttpResponseMessage responseMessage)
+        public HttpResponseMessage GetClientOrderSchema()
         {
             var schemaBase = ConfigurationManager.AppSettings["schemasBaseAddress"];
             var clientOrderSchemaUri = schemaBase + "/" + "client-order.xsd";
+            var responseMessage = new HttpResponseMessage(HttpStatusCode.Redirect, "");
             responseMessage.Headers.Location = new Uri(clientOrderSchemaUri);
-            responseMessage.StatusCode = HttpStatusCode.Redirect;
+            return responseMessage;
         }
 
         [WebGet(
             UriTemplate = "/{orderId}",
             RequestFormat = WebMessageFormat.Xml,
             ResponseFormat = WebMessageFormat.Xml)]
-        public OrderRepresentation Get(string orderId, HttpRequestMessage requestMessage, HttpResponseMessage responseMessage)
+        public HttpResponseMessage<OrderRepresentation> Get(string orderId, HttpRequestMessage requestMessage)
         {
             int id;
             if (int.TryParse(orderId, out id))
@@ -60,18 +62,15 @@ namespace Restbucks.Service.Resources
                 try
                 {
                     var response = _readOrderActivity.Read(id, requestMessage.RequestUri);
-                    responseMessage.StatusCode = HttpStatusCode.OK;
-                    return response;
+                    return new HttpResponseMessage<OrderRepresentation>(response, HttpStatusCode.OK);
                 }
                 catch (NoSuchOrderException)
                 {
-                    responseMessage.StatusCode = HttpStatusCode.NotFound;
-                    return null;
+                    return new HttpResponseMessage<OrderRepresentation>(HttpStatusCode.NotFound);
                 }
                 
             }
-            responseMessage.StatusCode = HttpStatusCode.BadRequest;
-            return null;
+            return new HttpResponseMessage<OrderRepresentation>(HttpStatusCode.BadRequest);
         }
 
         [WebInvoke(
@@ -79,7 +78,7 @@ namespace Restbucks.Service.Resources
             UriTemplate = "/{orderId}",
             RequestFormat = WebMessageFormat.Xml,
             ResponseFormat = WebMessageFormat.Xml)]
-        public OrderRepresentation Cancel(string orderId, HttpRequestMessage requestMessage, HttpResponseMessage responseMessage)
+        public HttpResponseMessage<OrderRepresentation> Cancel(string orderId, HttpRequestMessage requestMessage)
         {
             int id;
             if (int.TryParse(orderId, out id))
@@ -87,23 +86,19 @@ namespace Restbucks.Service.Resources
                 try
                 {
                     var response = _removeOrderActivity.Remove(id);
-                    responseMessage.StatusCode = HttpStatusCode.OK;
-                    return response;
+                    return new HttpResponseMessage<OrderRepresentation>(response, HttpStatusCode.OK);
                 }
                 catch (NoSuchOrderException)
                 {
-                    responseMessage.StatusCode = HttpStatusCode.NotFound;
-                    return null;
+                    return new HttpResponseMessage<OrderRepresentation>(HttpStatusCode.NotFound);
                 }
                 catch (UnexpectedOrderStateException)
                 {
-                    responseMessage.StatusCode = HttpStatusCode.MethodNotAllowed;
-                    return null;
+                    return new HttpResponseMessage<OrderRepresentation>(HttpStatusCode.MethodNotAllowed);
                 }
 
             }
-            responseMessage.StatusCode = HttpStatusCode.BadRequest;
-            return null;
+            return new HttpResponseMessage<OrderRepresentation>(HttpStatusCode.BadRequest);
         }
     }
 }

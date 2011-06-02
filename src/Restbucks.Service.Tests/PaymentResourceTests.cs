@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using Microsoft.ApplicationServer.Http;
 using NUnit.Framework;
 using Restbucks.Service.Activities;
 using Restbucks.Service.Domain;
@@ -26,11 +28,7 @@ namespace Restbucks.Service.Tests
             var id = _repository.Store(order);
             var representation = CreatePayment();
 
-            var responseMessage = new HttpResponseMessage();
-
-            _sut.Pay(id.ToString(), representation,
-                     new HttpRequestMessage(HttpMethod.Put, "http://restbucks.net/payment/" + id),
-                     responseMessage);
+            var responseMessage = _sut.Pay(id.ToString(), new HttpRequestMessage<PaymentRepresentation>(representation, HttpMethod.Put, new Uri("http://restbucks.net/payment/" + id), new MediaTypeFormatter[] {}));
 
             Assert.AreEqual(HttpStatusCode.Forbidden, responseMessage.StatusCode);
         }
@@ -43,11 +41,7 @@ namespace Restbucks.Service.Tests
             var representation = CreatePayment();
             representation.Amount = 2;
 
-            var responseMessage = new HttpResponseMessage();
-
-            _sut.Pay(id.ToString(), representation,
-                     new HttpRequestMessage(HttpMethod.Put, "http://restbucks.net/payment/" + id),
-                     responseMessage);
+            var responseMessage = _sut.Pay(id.ToString(), new HttpRequestMessage<PaymentRepresentation>(representation, HttpMethod.Put, new Uri("http://restbucks.net/payment/" + id), new MediaTypeFormatter[] { }));
 
             Assert.AreEqual(HttpStatusCode.BadRequest, responseMessage.StatusCode);
         }
@@ -59,11 +53,7 @@ namespace Restbucks.Service.Tests
             var id = _repository.Store(order);
             var representation = CreatePayment();
 
-            var responseMessage = new HttpResponseMessage();
-
-            _sut.Pay("aaa", representation,
-                     new HttpRequestMessage(HttpMethod.Put, "http://restbucks.net/payment/" + id),
-                     responseMessage);
+            var responseMessage = _sut.Pay("aaa", new HttpRequestMessage<PaymentRepresentation>(representation, HttpMethod.Put, new Uri("http://restbucks.net/payment/" + id), new MediaTypeFormatter[] { }));
 
             Assert.AreEqual(HttpStatusCode.BadRequest, responseMessage.StatusCode);
         }
@@ -74,11 +64,7 @@ namespace Restbucks.Service.Tests
             var id = _repository.Store(order);
             var representation = CreatePayment();
 
-            var responseMessage = new HttpResponseMessage();
-
-            _sut.Pay("13", representation,
-                     new HttpRequestMessage(HttpMethod.Put, "http://restbucks.net/payment/" + id),
-                     responseMessage);
+            var responseMessage = _sut.Pay("13", new HttpRequestMessage<PaymentRepresentation>(representation, HttpMethod.Put, new Uri("http://restbucks.net/payment/" + id), new MediaTypeFormatter[] { }));
 
             Assert.AreEqual(HttpStatusCode.NotFound, responseMessage.StatusCode);
         }
@@ -90,15 +76,12 @@ namespace Restbucks.Service.Tests
             var id = _repository.Store(order);
             var representation = CreatePayment();
 
-            var responseMessage = new HttpResponseMessage();
-
-            var responseBody = _sut.Pay(id.ToString(), representation,
-                     new HttpRequestMessage(HttpMethod.Put, "http://restbucks.net/payment/" + id),
-                     responseMessage);
+            var responseMessage = _sut.Pay(id.ToString(), new HttpRequestMessage<PaymentRepresentation>(representation, HttpMethod.Put, new Uri("http://restbucks.net/payment/" + id), new MediaTypeFormatter[] { }));
+            var result = responseMessage.Content.ReadAs();
 
             Assert.AreEqual(HttpStatusCode.Created, responseMessage.StatusCode);
-            Assert.AreEqual("http://restbucks.net/order/1", responseBody.OrderLink);
-            Assert.AreEqual("http://restbucks.net/receipt/1", responseBody.ReceiptLink);
+            Assert.AreEqual("http://restbucks.net/order/1", result.OrderLink);
+            Assert.AreEqual("http://restbucks.net/receipt/1", result.ReceiptLink);
         }
 
         private static Order CreateOrder()
@@ -121,6 +104,7 @@ namespace Restbucks.Service.Tests
         [SetUp]
         public void Initialize()
         {
+            RestbucksResources.BaseAddress = "http://restbucks.net";
             _repository = new InMemoryOrderRepository();
             var mapper = new PaymentRepresentationMapper();
             _sut = new PaymentResource(new PaymentActivity(_repository, mapper));

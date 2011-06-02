@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
-using System.ServiceModel;
 using System.ServiceModel.Activation;
-using System.Web;
 using System.Web.Routing;
-using Microsoft.ServiceModel.Http;
+using Microsoft.ApplicationServer.Http.Activation;
+using Microsoft.ApplicationServer.Http.Description;
 using Restbucks.Service.Resources;
 
 namespace Restbucks.Service
@@ -14,7 +13,13 @@ namespace Restbucks.Service
     public static class RestbucksResources
     {
         private static readonly List<ResourceBinding> _resources = new List<ResourceBinding>();
-        private static readonly string _baseAddress;
+        private static string _baseAddress;
+
+        public static string BaseAddress
+        {
+            get { return _baseAddress; }
+            set { _baseAddress = value; }
+        }
 
         private static void Bind<T>(string relativeUri)
         {
@@ -26,10 +31,10 @@ namespace Restbucks.Service
             Bind<OrderResource>("order");
             Bind<PaymentResource>("payment");
             Bind<ReceiptResource>("receipt");
-            _baseAddress = ConfigurationManager.AppSettings["baseAddress"];
+            BaseAddress = ConfigurationManager.AppSettings["baseAddress"];
         }
 
-        public static void RegisterRoutes(HttpHostConfiguration configuration)
+        public static void RegisterRoutes(IHttpHostConfigurationBuilder configuration)
         {
             foreach (var resourceBinding in _resources)
             {
@@ -39,7 +44,7 @@ namespace Restbucks.Service
 
         public static string GetResourceUri<T>(Uri requestUri, string suffix)
         {
-            var result = _baseAddress + "/" + GetResourceUri<T>() + "/" + suffix;
+            var result = BaseAddress + "/" + GetResourceUri<T>() + "/" + suffix;
             return result;
         }
 
@@ -53,9 +58,9 @@ namespace Restbucks.Service
             return binding.RelativeUri;
         }
 
-        private static void AddServiceRoute(Type serviceType, string routePrefix, HttpHostConfiguration configuration)
-        {            
-            var route = new ServiceRoute(routePrefix, new WebHttpServiceHostFactory {Configuration = configuration}, serviceType);
+        private static void AddServiceRoute(Type serviceType, string routePrefix, IHttpHostConfigurationBuilder configuration)
+        {
+            var route = new ServiceRoute(routePrefix, new RestbucksServiceHostFactory(configuration), serviceType);
             RouteTable.Routes.Add(route);
         }
     }

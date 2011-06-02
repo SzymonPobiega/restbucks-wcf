@@ -4,6 +4,7 @@ using System.Net;
 using System.Net.Http;
 using System.ServiceModel;
 using System.ServiceModel.Web;
+using Microsoft.ApplicationServer.Http;
 using Restbucks.Service.Activities;
 using Restbucks.Service.Domain;
 using Restbucks.Service.Representations;
@@ -24,12 +25,13 @@ namespace Restbucks.Service.Resources
            UriTemplate = "/{paymentId}",
            RequestFormat = WebMessageFormat.Xml,
            ResponseFormat = WebMessageFormat.Xml)]
-        public void GetPaymentSchema(HttpResponseMessage responseMessage)
+        public HttpResponseMessage GetPaymentSchema()
         {
             var schemaBase = ConfigurationManager.AppSettings["schemasBaseAddress"];
             var clientOrderSchemaUri = schemaBase + "/" + "payment.xsd";
+            var responseMessage = new HttpResponseMessage(HttpStatusCode.Redirect, "");
             responseMessage.Headers.Location = new Uri(clientOrderSchemaUri);
-            responseMessage.StatusCode = HttpStatusCode.Redirect;
+            return responseMessage;
         }
 
         [WebInvoke(
@@ -37,36 +39,32 @@ namespace Restbucks.Service.Resources
             UriTemplate = "/{paymentId}",
             RequestFormat = WebMessageFormat.Xml,
             ResponseFormat = WebMessageFormat.Xml)]
-        public PaymentRepresentation Pay(string paymentId, PaymentRepresentation paymentRepresentation, HttpRequestMessage requestMessage, HttpResponseMessage responseMessage)
+        public HttpResponseMessage<PaymentRepresentation> Pay(string paymentId, HttpRequestMessage<PaymentRepresentation> requestMessage)
         {
             int id;
             if (int.TryParse(paymentId, out id))
             {
                 try
                 {
-                    var response = _paymentActivity.Pay(id, paymentRepresentation, requestMessage.RequestUri);
-                    responseMessage.StatusCode = HttpStatusCode.Created;
+                    var response = _paymentActivity.Pay(id, requestMessage.Content.ReadAs(), requestMessage.RequestUri);
+                    var responseMessage = new HttpResponseMessage<PaymentRepresentation>(response, HttpStatusCode.Created);
                     responseMessage.Headers.Location = requestMessage.RequestUri;
-                    return response;
+                    return responseMessage;
                 }
                 catch (NoSuchOrderException)
                 {
-                    responseMessage.StatusCode = HttpStatusCode.NotFound;
-                    return null;
+                    return new HttpResponseMessage<PaymentRepresentation>(HttpStatusCode.NotFound);
                 }
                 catch (UnexpectedOrderStateException)
                 {
-                    responseMessage.StatusCode = HttpStatusCode.Forbidden;
-                    return null;
+                    return new HttpResponseMessage<PaymentRepresentation>(HttpStatusCode.Forbidden);
                 }
                 catch (InvalidPaymentException)
                 {
-                    responseMessage.StatusCode = HttpStatusCode.BadRequest;
-                    return null;
+                    return new HttpResponseMessage<PaymentRepresentation>(HttpStatusCode.BadRequest);
                 }
             }
-            responseMessage.StatusCode = HttpStatusCode.BadRequest;
-            return null;
+            return new HttpResponseMessage<PaymentRepresentation>(HttpStatusCode.BadRequest);
         }
     }
 }

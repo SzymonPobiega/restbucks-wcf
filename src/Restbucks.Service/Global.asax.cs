@@ -2,14 +2,15 @@
 using System.Web;
 using System.Web.Routing;
 using Autofac;
+using Microsoft.ApplicationServer.Http.Description;
 
 namespace Restbucks.Service
 {
     public class Global : HttpApplication
     {
-        private static RestbucksConfiguration _configuration;
+        private static IHttpHostConfigurationBuilder _configuration;
 
-        public static RestbucksConfiguration Configuration
+        public static IHttpHostConfigurationBuilder Configuration
         {
             get { return _configuration; }
         }
@@ -19,7 +20,11 @@ namespace Restbucks.Service
             var containerBuilder = new ContainerBuilder();
             containerBuilder.RegisterModule(new MainModule());
             var container = containerBuilder.Build();
-            _configuration = new RestbucksConfiguration(container);
+
+            _configuration = HttpHostConfiguration.Create()
+                .AddFormatters(new RestbucksMediaTypeFormatter())         
+                .SetResourceFactory(new RestbucksResourceFactory(container));
+
             RestbucksResources.RegisterRoutes(Configuration);
         }
     }
